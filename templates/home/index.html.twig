@@ -8,7 +8,19 @@
     <strong>Olá</strong>
 
   {% if app.user %}
-    <div class="mb-3">{{ app.user.name }}</div>
+
+      <div class="mb-1">{{ app.user.name }}</div>
+
+    {% if is_granted('ROLE_TEACHER') %}
+      <div class="mb-3">{{ app.user.subject }}</div>
+    {% endif %}
+
+    {% if app.user.isVerified %}
+      <div>Está verificado</div>
+    {% else %}
+      <div>Verifique sua conta no email enviado</div>
+    {% endif %}
+
   {% else %}
     <div class="mb-3">Ninguém</div>
   {% endif %}
