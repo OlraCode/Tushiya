@@ -3,6 +3,7 @@
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
+<main>
     <form method="post">
         {% if error %}
             <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
@@ -37,8 +38,6 @@
         <button class="btn btn-lg btn-primary" type="submit">
             Sign in
         </button>
-        <div class="fazerl">lulaxbolsonaro
-        capitulo 13
-        </div>
     </form>
+    </main>
 {% endblock %}

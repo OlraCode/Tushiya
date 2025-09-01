@@ -6,7 +6,7 @@
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
-
+<main>
     <h1>Usuário</h1>
 
     <div>
@@ -23,5 +23,5 @@
     </div>
 
     <a href="{{ path('app_register_teacher') }}">Cadastro como professor</a>
-
+</main>
 {% endblock %}
