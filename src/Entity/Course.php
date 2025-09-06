@@ -2,9 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\CourseRepository;
+use App\Entity\CartItem;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\CourseRepository;
+use Doctrine\Common\Collections\Collection;
 
 #[ORM\Entity(repositoryClass: CourseRepository::class)]
 class Course
@@ -28,6 +30,12 @@ class Course
 
     #[ORM\Column(type: Types::DECIMAL, precision: 7, scale: 2)]
     private ?string $price = null;
+
+    /**
+     * @var Collection<int, CartItem>
+     */
+    #[ORM\OneToMany(targetEntity: CartItem::class, mappedBy: 'user', orphanRemoval: true, cascade: ["REMOVE"])]
+    private Collection $cartItems;
 
     public function getId(): ?int
     {
@@ -90,6 +98,18 @@ class Course
     public function setPrice(string $price): static
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getCartItems()
+    {
+        return $this->cartItems;
+    }
+
+    public function setCartItems($cartItems)
+    {
+        $this->cartItems = $cartItems;
 
         return $this;
     }
