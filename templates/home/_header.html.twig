@@ -1,0 +1,57 @@
+<nav class="navbar navbar-expand-lg bg-body-tertiary" >
+  <div class="container-fluid mx-2">
+
+    <a class="navbar-brand me-3" href="/">
+        <img src="{{ asset('img/tushiya.png') }}" alt="Tushiya" style="width: 120px">
+    </a>
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="navbar-nav mb-2 mb-lg-0">
+
+        <li class="nav-item">
+          <a class="nav-link btn me-2" aria-current="page" href="#">Explorar</a>
+        </li>
+
+        <li class="nav-item">
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Busque algum curso" aria-label="Search" style="width: 500px"/>
+            <button class="btn btn-outline-success me-3" type="submit">Buscar</button>
+          </form>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+        {% if is_granted('ROLE_USER') %}
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Minha conta
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#">Meus cursos</a></li>
+                    <li><a class="dropdown-item" href="#">Meu perfil</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_logout') }}">Sair</a></li>
+                </ul>
+            </li>
+
+        {% else %}
+
+            <li class="nav-item ms-3">
+            <a class="btn btn-outline-primary" href="{{ path('app_login') }}">Login</a>
+            </li>
+
+            <li class="nav-item ms-2">
+            <a class="btn btn-primary" href="{{ path('app_register') }}">Registro</a>
+            </li>
+
+        {% endif %}
+      </ul>
+      
+    </div>
+  </div>
+</nav>
