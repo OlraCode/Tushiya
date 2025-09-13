@@ -32,6 +32,8 @@ final class CartController extends AbstractController
     {
         $this->cart->addCourse($course, $this->getUser());
 
+        $this->addFlash('success', 'Curso adicionado ao carrinho');
+
         return new RedirectResponse($request->headers->get('referer'));
     }
 
@@ -39,6 +41,8 @@ final class CartController extends AbstractController
     public function delete(Course $course, Request $request): Response
     {
         $this->cart->removeCourse($course, $this->getUser());
+
+        $this->addFlash('success', 'Curso removido do carrinho');
 
         return new RedirectResponse($request->headers->get('referer'));
     }

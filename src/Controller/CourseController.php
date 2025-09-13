@@ -40,6 +40,8 @@ final class CourseController extends AbstractController
             $entityManager->persist($course);
             $entityManager->flush();
 
+            $this->addFlash('success', 'Curso adicionado com sucesso');
+
             return $this->redirectToRoute('app_course_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -72,6 +74,8 @@ final class CourseController extends AbstractController
 
             $entityManager->flush();
 
+            $this->addFlash('success', 'Curso editado com sucesso');
+
             return $this->redirectToRoute('app_course_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -88,6 +92,8 @@ final class CourseController extends AbstractController
             $entityManager->remove($course);
             $entityManager->flush();
         }
+
+        $this->addFlash('success', 'Curso removido com sucesso');
 
         return $this->redirectToRoute('app_course_index', [], Response::HTTP_SEE_OTHER);
     }
