@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cart{% endblock %}
+
+{% block body %}
+
+    <div>
+
+        {% for cartItem in cartItems %}
+            <div class="d-flex m-5 justify-content-between">
+                <img src="{{ asset('upload/coverImages/' ~ cartItem.course.image) }}" style="width: 100px">
+                <h2>{{ cartItem.course.title }}</h2>
+                <h2>{{ cartItem.course.price }}</h2>
+                <form action="{{ path('app_cart_delete', {"id": cartItem.course.id }) }}" method="POST">
+                    <button type="submit" class="btn btn-warning">Remover do carrinho</button>
+                </form>
+            </div>
+        {% else %}
+            <h2>Nenhum item no carrinho</h2>
+        {% endfor %}
+
+        <hr>
+        
+        <h1>Valor Total: </h1>
+
+    </div>
+
+{% endblock %}

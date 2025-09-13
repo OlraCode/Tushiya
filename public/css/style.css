@@ -1,0 +1,20 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+  background: linear-gradient(to right, #a062d3, #5f0a87);
+}
+
+main{
+  background-color: #f8f9fa;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px;
+  width: 100%;
+  max-width: 400px;
+  margin: 120px auto 0 auto;
+}
