@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Course index{% endblock %}
+
+{% block body %}
+    <h1>Catálogo de Cursos</h1>
+
+    <a href="{{ path('app_course_new') }}" class="btn btn-primary my-2">Adicionar Novo</a>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Imagem</th>
+                <th>Título</th>
+                <th>Descrição</th>
+                <th>Categoria</th>
+                <th>Preço</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for course in courses %}
+            <tr>
+                <td><img src="{{ asset('upload/coverImages/' ~ course.image) }}" alt="Capa" style="width: 120px"></td>
+                <td>{{ course.title }}</td>
+                <td>{{ course.description }}</td>
+                <td>{{ course.category }}</td>
+                <td>{{ course.price }}</td>
+                <td>
+                    <div class="d-flex">
+                        {% if is_granted('ROLE_USER') %}
+                            <a href="{{ path('app_course_show', {'id': course.id}) }}" class="btn btn-dark me-2">Detalhes</a>
+                            <a href="{{ path('app_course_edit', {'id': course.id}) }}" class="btn btn-warning me-2">Editar</a>
+                            <form action="{{ path('app_cart_new', {'id': course.id}) }}" method="POST">
+                                <button type="submit" class="btn btn-primary">Adicionar ao Carrinho</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Nenhum curso encontrado</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
