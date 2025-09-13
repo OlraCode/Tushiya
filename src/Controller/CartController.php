@@ -22,16 +22,17 @@ final class CartController extends AbstractController
     public function index(): Response
     {
         $cartItems = $this->cart->getCourses($this->getUser());
+        $totalPrice = $this->cart->totalPrice($this->getUser());
 
-        return $this->render('cart/index.html.twig', [
-            'cartItems' => $cartItems,
-        ]);
+        return $this->render('cart/index.html.twig', compact('cartItems', 'totalPrice'));
     }
 
     #[Route('/cart/{id}', name: 'app_cart_new', methods: ['POST'])]
     public function new(Course $course, Request $request): Response
     {
         $this->cart->addCourse($course, $this->getUser());
+
+        $this->addFlash('success', 'Curso adicionado ao carrinho');
 
         return new RedirectResponse($request->headers->get('referer'));
     }
@@ -40,6 +41,8 @@ final class CartController extends AbstractController
     public function delete(Course $course, Request $request): Response
     {
         $this->cart->removeCourse($course, $this->getUser());
+
+        $this->addFlash('success', 'Curso removido do carrinho');
 
         return new RedirectResponse($request->headers->get('referer'));
     }

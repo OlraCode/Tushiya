@@ -7,12 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Mime\Message;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
-#[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['email'], message: 'Já existe uma conta com esse e-mail')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -20,7 +22,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 180)]
+    #[ORM\Column(length: 60)]
+    #[Assert\NotBlank(message: 'Campo E-mail é obrigatório')]
+    #[Assert\Email(message: 'E-mail deve ser válido')]
+    #[Assert\Length(min: 5, max: 60, maxMessage: 'Email deve conter no máximo 60 caracteres', minMessage: 'Email deve conter pelo menos 5 caracteres')]
     private ?string $email = null;
 
     /**
@@ -38,7 +43,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private bool $isVerified = false;
 
-    #[ORM\Column(length: 65)]
+    #[ORM\Column(length: 30)]
+    #[Assert\Length(min: 3, max: 30, minMessage: 'Nome deve conter no mínimo 3 caracteres', maxMessage: 'Nome deve conter no máximo 30 caracteres')]
+    #[Assert\NotBlank(message: 'Campo nome é obrigatório')]
     private ?string $name = null;
 
     #[ORM\Column(length: 20, nullable: true)]

@@ -53,8 +53,11 @@ class CartService
         return in_array($course, $courseList);
     }
 
-    public function totalPrice(User $user): void
+    public function totalPrice(User $user): string
     {
-        # code...
+        $courseList = $this->getCourses($user);
+        $price = array_reduce($courseList, fn ($value, CartItem $item) => bcadd($value, $item->getCourse()->getPrice(), 2), 0);
+
+        return $price;
     }
 }
