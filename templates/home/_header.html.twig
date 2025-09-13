@@ -14,7 +14,7 @@
       <ul class="navbar-nav mb-2 mb-lg-0">
 
         <li class="nav-item">
-          <a class="nav-link btn me-2" aria-current="page" href="#">Explorar</a>
+          <a class="nav-link btn me-2" aria-current="page" href="{{ path('app_course_index') }}">Explorar</a>
         </li>
 
         <li class="nav-item">
@@ -28,7 +28,9 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
         {% if is_granted('ROLE_USER') %}
-            <li class="nav-item dropdown">
+            <li class="nav-item"><a href="{{ path('app_cart') }}"><img src="{{ asset('img/cart.png') }}" alt="Carrinho" style="width: 36px"></a></li>
+        
+            <li class="nav-item dropdown ms-3">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Minha conta
                 </a>
