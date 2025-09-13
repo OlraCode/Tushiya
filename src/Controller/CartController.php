@@ -22,10 +22,9 @@ final class CartController extends AbstractController
     public function index(): Response
     {
         $cartItems = $this->cart->getCourses($this->getUser());
+        $totalPrice = $this->cart->totalPrice($this->getUser());
 
-        return $this->render('cart/index.html.twig', [
-            'cartItems' => $cartItems,
-        ]);
+        return $this->render('cart/index.html.twig', compact('cartItems', 'totalPrice'));
     }
 
     #[Route('/cart/{id}', name: 'app_cart_new', methods: ['POST'])]
