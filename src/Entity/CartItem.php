@@ -19,7 +19,7 @@ class CartItem
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
-    private ?Course $Course = null;
+    private ?Course $course = null;
 
     #[ORM\ManyToOne(inversedBy: 'cartItems')]
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
@@ -32,12 +32,12 @@ class CartItem
 
     public function getCourse(): ?Course
     {
-        return $this->Course;
+        return $this->course;
     }
 
-    public function setCourse(?Course $Course): static
+    public function setCourse(?Course $course): static
     {
-        $this->Course = $Course;
+        $this->course = $course;
 
         return $this;
     }
