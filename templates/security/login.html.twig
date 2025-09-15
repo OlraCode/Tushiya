@@ -1,8 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Entrar{% endblock %}
-
 {% block body %}
+
+    <link rel="stylesheet" href={{asset('css/login.css')}}>
 
     <form method="post">
         {% if error %}
@@ -25,8 +26,15 @@
                value="{{ csrf_token('authenticate') }}"
         >
 
-        <button class="btn btn-lg btn-primary mt-3" type="submit">Entrar</button>
+        <button class="btn btn-lg btn-success mt-3" type="submit">
+            Sign in
+        </button>
+
+        {#
+            <div class="fazerl">lulaxbolsonaro
+            capitulo 13
+            </div>
+        #}
 
     </form>
-
 {% endblock %}

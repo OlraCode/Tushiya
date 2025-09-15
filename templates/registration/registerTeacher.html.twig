@@ -1,12 +1,18 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}Register{% endblock %}
 
 {% block body %}
+
+    <link rel="stylesheet" href={{asset('css/login.css')}}>
+
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
-
+    
+<div class="form-container">
+    <main>
     <h1>Professor</h1>
 
     <div>
@@ -23,5 +29,9 @@
     </div>
 
     <a href="{{ path('app_register') }}">Cadastro como aluno</a>
-
+    </main>
+<div class="img-box">
+   <img src="/img/Fundologin.jpg" alt="Background">
+</div>
+</div>
 {% endblock %}
