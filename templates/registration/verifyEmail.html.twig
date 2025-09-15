@@ -1,0 +1,9 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <h1>Verifique seu Email</h1>
+    <p>Um link foi enviado para o seu e-mail verifique, para continuar a acessar a plataforma.</p>
+    <form action="{{ path('app_send_email_verification') }}" method="POST"><button type="submit" class="btn btn-success">Reenviar email</button></form>
+
+{% endblock %}
