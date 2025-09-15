@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Entity\CartItem;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\CourseRepository;
 use Doctrine\Common\Collections\Collection;
 
@@ -17,9 +18,13 @@ class Course
     private ?int $id = null;
 
     #[ORM\Column(length: 25)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min: 3, max: 25)]
     private ?string $title = null;
 
     #[ORM\Column(length: 60)]
+    #[Assert\NotBlank()]
+    #[Assert\Length(min: 8, max: 60)]
     private ?string $description = null;
 
     #[ORM\Column(length: 15)]
@@ -29,6 +34,8 @@ class Course
     private ?string $image = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 7, scale: 2)]
+    #[Assert\NotBlank(message: 'Campo título é obrigatório.')]
+    #[Assert\Range(min: 1, max: 99999.99)]
     private ?string $price = null;
 
     /**

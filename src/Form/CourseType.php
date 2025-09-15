@@ -8,6 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\Image;
 
 class CourseType extends AbstractType
 {
@@ -17,7 +18,7 @@ class CourseType extends AbstractType
             ->add('title', options: ['label' => 'Título'])
             ->add('description', options: ['label' => 'Descrição'])
             ->add('category', options: ['label' => 'Categoria'])
-            ->add('image', FileType::class, ['mapped' => false, 'required' => false, 'label' => 'Imagem'])
+            ->add('image', FileType::class, ['mapped' => false, 'required' => false, 'label' => 'Imagem', 'constraints' => [new Image()]])
             ->add('price', MoneyType::class, ['currency' => 'BRL', 'label' => 'Preço'])
         ;
     }
