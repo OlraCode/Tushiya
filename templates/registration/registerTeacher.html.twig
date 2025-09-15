@@ -13,7 +13,7 @@
     
 <div class="form-container">
     <main>
-    <h1>Professor</h1>
+    <h1 class="prof" >Professor</h1>
 
     <div>
         {{ form_errors(registrationForm) }}
@@ -28,7 +28,7 @@
         {{ form_end(registrationForm) }}
     </div>
 
-    <a href="{{ path('app_register') }}">Cadastro como aluno</a>
+    <a href="{{ path('app_register') }}" class="alternative-link">Cadastro como aluno</a>
     </main>
 <div class="img-box">
    <img src="/img/Fundologin.jpg" alt="Background">
