@@ -52,7 +52,7 @@ body {
     width: 90%;
     max-width: 1200px;
     height: 600px;
-    margin: 30px auto;
+    margin: 80px auto;
     background: white;
     border-radius: 15px;
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
@@ -67,6 +67,17 @@ main {
     flex-direction: column;
     justify-content: center;
     overflow: scroll;
+}
+
+/* Barra de rolagem */
+main::-webkit-scrollbar {
+  width: 6px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8a2be2;
+  border-radius: 10px;
 }
 
 h1.aluno {
@@ -219,16 +230,13 @@ input[type="password"]:focus {
     main {
         padding: 30px 20px;
     }
-    h1 {
+
+    h1.prof, h1.aluno {
         margin: 20px 0
     }
 }
 
 @media (max-width: 768px) {
-    body {
-        padding-top: 60px;
-    }
-    
     .navbar {
         padding: 12px 0;
     }
