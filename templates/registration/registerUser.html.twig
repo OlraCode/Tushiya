@@ -3,30 +3,36 @@
 {% block title %}Cadastro{% endblock %}
 
 {% block body %}
+
+    <link rel="stylesheet" href={{asset('css/login.css')}}>
+
     {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
     {% endfor %}
-<div class="container">
-    <main>
-        <h1>Cadastro</h1>
 
-    <div>
-        {{ form_errors(registrationForm) }}
-        {{ form_start(registrationForm) }}
-            {{ form_row(registrationForm.name) }}
-            {{ form_row(registrationForm.email) }}
-            {{ form_row(registrationForm.plainPassword, { label: 'Senha'}) }}
-            {{ form_row(registrationForm.agreeTerms) }}
+    <div class="form-container">
+        <main>
+            <h1>Cadastro</h1>
 
-            <button type="submit" class="btn btn-success mb-1">Register</button>
-            
-        {{ form_end(registrationForm) }}
+            <div>
+                {{ form_errors(registrationForm) }}
+                {{ form_start(registrationForm) }}
+                    {{ form_row(registrationForm.name) }}
+                    {{ form_row(registrationForm.email) }}
+                    {{ form_row(registrationForm.plainPassword, { label: 'Senha'}) }}
+                    {{ form_row(registrationForm.agreeTerms) }}
+
+                    <button type="submit" class="btn btn-success mb-1">Register</button>
+                    
+                {{ form_end(registrationForm) }}
+            </div>
+
+            <a href="{{ path('app_register_teacher') }}" class="alternative-link">Cadastro como professor</a>
+        </main>
+
+        <div class="img-box">
+            <img src="/img/Fundologin.jpg" alt="Background">
+        </div>
     </div>
 
-    <a href="{{ path('app_register_teacher') }}">Cadastro como professor</a>
-</main>
-<div class="img-box">
-   <img src="/img/Fundologin.jpg" alt="Background">
-</div>
-</div>
 {% endblock %}

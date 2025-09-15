@@ -12,26 +12,6 @@ body {
     padding-top: 70px; /* Espaço para a navbar fixa */
 }
 
-/* Navbar fixa no topo */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    padding: 15px 0;
-    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-}
-
-.navbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 90%;
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
 .navbar-brand {
     color: white;
     font-size: 1.8rem;
@@ -68,7 +48,7 @@ body {
 }
 
 /* Container principal */
-.container {
+.form-container {
     display: flex;
     width: 90%;
     max-width: 1200px;
@@ -104,7 +84,6 @@ h1 {
 
 label {
     display: block;
-    margin-bottom: 8px;
     font-weight: 600;
     color: #555;
 }
@@ -166,7 +145,6 @@ input[type="password"]:focus {
 
 .btn-success:hover {
     background: linear-gradient(135deg, #7a1bd2 0%, #8360d1 100%);
-    transform: translateY(-2px);
     box-shadow: 0 6px 15px rgba(138, 43, 226, 0.4);
 }
 
@@ -179,6 +157,7 @@ input[type="password"]:focus {
     display: block;
     font-weight: 500;
     transition: all 0.3s;
+    margin-top: 12px;
 }
 
 .alternative-link:hover {
@@ -218,7 +197,7 @@ input[type="password"]:focus {
 
 /* Responsividade */
 @media (max-width: 992px) {
-    .container {
+    .form-container {
         flex-direction: column;
         height: auto;
         margin: 20px;
