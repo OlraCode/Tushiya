@@ -1,3 +1,5 @@
+<link rel="stylesheet" href="{{ asset('css/header.css') }}">
+
 <nav class="navbar navbar-expand-lg bg-body-tertiary" >
   <div class="container-fluid mx-2">
 
@@ -20,7 +22,7 @@
         <li class="nav-item">
           <form class="d-flex" role="search">
             <input class="form-control me-2" type="search" placeholder="Busque algum curso" aria-label="Search" style="width: 500px"/>
-            <button class="btn btn-outline-success me-3" type="submit">Buscar</button>
+            <button class="btn me-3 rounded-circle p-2 border search" type="submit"><img src="{{ asset('img/search.png') }}" alt="Buscar" style="width: 25px"></button>
           </form>
         </li>
       </ul>
@@ -28,7 +30,18 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
         {% if is_granted('ROLE_USER') %}
-            <li class="nav-item"><a href="{{ path('app_cart') }}"><img src="{{ asset('img/cart.png') }}" alt="Carrinho" style="width: 36px"></a></li>
+          <li class="nav-item">
+            <a href="{{ path('app_cart') }}" class="position-relative">
+              <img src="{{ asset('img/cart.png') }}" alt="Carrinho" style="width: 36px">
+              {% set cartQty = app.user.getCartItems.count %}
+              {% if cartQty > 0 %}
+                <span class="position-absolute top-1 start-100 translate-middle badge rounded-pill bg-danger">
+                  {{ cartQty }}
+                  <span class="visually-hidden">Carrinho</span>
+                </span>
+              {% endif %}
+            </a>
+          </li>
         {% endif %}
         
         {% if is_granted('ROLE_USER') %}

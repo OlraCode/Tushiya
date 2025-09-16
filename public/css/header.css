@@ -1,0 +1,8 @@
+button.search {
+    cursor: pointer;
+    transition: all .2s;
+}
+
+button.search:hover {
+    background-color: #b96eff;
+}
