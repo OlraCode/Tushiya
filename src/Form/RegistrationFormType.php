@@ -50,7 +50,6 @@ class RegistrationFormType extends AbstractType
                 'second_options' => ['label' => 'Confirmar Senha'],
                 'invalid_message' => 'As senhas não coincidem.',
                 'mapped' => false,
-
             ])
         ;
     }
