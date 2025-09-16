@@ -21,7 +21,9 @@ class CartService
     public function getCourses(): array
     {
         $user = $this->security->getUser();
-        $courseList = $this->repository->findBy(['user' => $user]);
+        $cart = $this->repository->findBy(['user' => $user]);
+        $courseList = array_map(fn ($item) => $item->getCourse(), $cart);
+
         return $courseList;
     }
 
@@ -71,7 +73,7 @@ class CartService
         $user = $this->security->getUser();
         
         $courseList = $this->getCourses($user);
-        $price = array_reduce($courseList, fn ($value, CartItem $item) => bcadd($value, $item->getCourse()->getPrice(), 2), 0);
+        $price = array_reduce($courseList, fn ($value, Course $item) => bcadd($value, $item->getPrice(), 2), 0);
 
         return $price;
     }

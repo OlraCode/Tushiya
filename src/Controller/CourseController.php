@@ -18,13 +18,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 final class CourseController extends AbstractController
 {
     #[Route(name: 'app_course_index', methods: ['GET'])]
-    public function index(CourseRepository $courseRepository, CartService $cartService): Response
+    public function index(CourseRepository $courseRepository, CartService $cartService, Request $request): Response
     {
-        $cartCourses = array_map(fn ($item) => $item->getCourse(), $cartService->getCourses());
+        $search = $request->get('search');
+
+        if ($search) {
+            $courses = $courseRepository->search($search);
+        } else {
+            $courses = $courseRepository->findAll();
+        }
 
         return $this->render('course/index.html.twig', [
-            'courses' => $courseRepository->findAll(),
-            'cart' => $cartCourses
+            'courses' => $courses,
+            'cart' => $cartService->getCourses(),
         ]);
     }
 

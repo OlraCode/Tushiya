@@ -27,20 +27,20 @@ class CourseRepository extends ServiceEntityRepository
         $course->setImage($name);
     }
 
-    //    /**
-    //     * @return Course[] Returns an array of Course objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('c')
-    //            ->andWhere('c.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('c.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+       /**
+        * @return Course[] Returns an array of Course objects
+        */
+       public function search($search): array
+       {
+           return $this->createQueryBuilder('c')
+               ->andWhere('c.title LIKE :val')
+               ->setParameter('val', '%'.$search.'%')
+               ->orderBy('c.title', 'ASC')
+               ->setMaxResults(12)
+               ->getQuery()
+               ->getResult()
+           ;
+       }
 
     //    public function findOneBySomeField($value): ?Course
     //    {

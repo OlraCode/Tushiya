@@ -20,8 +20,8 @@
         </li>
 
         <li class="nav-item">
-          <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="Busque algum curso" aria-label="Search" style="width: 500px"/>
+          <form class="d-flex" role="search" action="{{ path('app_course_index') }}">
+            <input class="form-control me-2" type="search" name="search" placeholder="Busque algum curso" aria-label="Search" style="width: 500px"/>
             <button class="btn me-3 rounded-circle p-2 border search" type="submit"><img src="{{ asset('img/search.png') }}" alt="Buscar" style="width: 25px"></button>
           </form>
         </li>
