@@ -26,10 +26,16 @@ class VerifiedUserSubscriber implements EventSubscriberInterface
             return;
         }
 
+        $currentRoute = $event->getRequest()->attributes->get('_route');
+
         if (!$user->isVerified()) {
-            $currentRoute = $event->getRequest()->attributes->get('_route');
             if ($currentRoute !== 'app_user_verify') {
                 $url = $this->router->generate('app_user_verify');
+                $event->setResponse(new RedirectResponse($url));
+            }
+        } else {
+            if ($currentRoute === 'app_user_verify') {
+                $url = $this->router->generate('app_home');
                 $event->setResponse(new RedirectResponse($url));
             }
         }

@@ -44,6 +44,10 @@ class Course
     #[ORM\OneToMany(targetEntity: CartItem::class, mappedBy: 'user', orphanRemoval: true, cascade: ["REMOVE"])]
     private Collection $cartItems;
 
+    #[ORM\ManyToOne(inversedBy: 'courses')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $teacher = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -117,6 +121,18 @@ class Course
     public function setCartItems($cartItems)
     {
         $this->cartItems = $cartItems;
+
+        return $this;
+    }
+
+    public function getTeacher(): ?User
+    {
+        return $this->teacher;
+    }
+
+    public function setTeacher(?User $teacher): static
+    {
+        $this->teacher = $teacher;
 
         return $this;
     }

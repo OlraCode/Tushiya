@@ -2,15 +2,17 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Entity\Course;
 use App\Form\CourseType;
-use App\Repository\CourseRepository;
 use App\Services\CartService;
+use App\Repository\CourseRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/course')]
 final class CourseController extends AbstractController
@@ -37,6 +39,8 @@ final class CourseController extends AbstractController
                 $repository->addCover($course, $image);
             }
 
+            $course->setTeacher($this->getUser());
+
             $entityManager->persist($course);
             $entityManager->flush();
 
@@ -51,7 +55,7 @@ final class CourseController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_course_show', methods: ['GET'])]
+    #[Route('/{id}/show', name: 'app_course_show', methods: ['GET'])]
     public function show(Course $course, CartService $cart): Response
     {
         $isInCart = $cart->hasCourse($course, $this->getUser());
@@ -96,5 +100,16 @@ final class CourseController extends AbstractController
         $this->addFlash('success', 'Curso removido com sucesso');
 
         return $this->redirectToRoute('app_course_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[IsGranted('ROLE_TEACHER')]
+    #[Route('/sent', name: 'app_sent_courses', methods: ['GET'])]
+    public function sentCourses(): Response
+    {
+        /** @var User */
+        $user = $this->getUser();
+        $courseList = $user->getCourses();
+
+        return $this->render('course/sent_courses.html.twig', compact('courseList'));
     }
 }

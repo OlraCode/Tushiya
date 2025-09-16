@@ -11,7 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[IsGranted('ROLE_STUDENT')]
+#[IsGranted('ROLE_USER')]
 final class CartController extends AbstractController
 {
 
@@ -23,8 +23,8 @@ final class CartController extends AbstractController
     #[Route('/cart', name: 'app_cart', methods: ['GET'])]
     public function index(): Response
     {
-        $cartItems = $this->cart->getCourses($this->getUser());
-        $totalPrice = $this->cart->totalPrice($this->getUser());
+        $cartItems = $this->cart->getCourses();
+        $totalPrice = $this->cart->totalPrice();
 
         return $this->render('cart/index.html.twig', compact('cartItems', 'totalPrice'));
     }
@@ -32,7 +32,7 @@ final class CartController extends AbstractController
     #[Route('/cart/{id}', name: 'app_cart_new', methods: ['POST'])]
     public function new(Course $course, Request $request): Response
     {
-        $this->cart->addCourse($course, $this->getUser());
+        $this->cart->addCourse($course);
 
         $this->addFlash('success', 'Curso adicionado ao carrinho');
 
@@ -42,7 +42,7 @@ final class CartController extends AbstractController
     #[Route('cart/{id}/delete', name: 'app_cart_delete', methods: ['POST'])]
     public function delete(Course $course, Request $request): Response
     {
-        $this->cart->removeCourse($course, $this->getUser());
+        $this->cart->removeCourse($course);
 
         $this->addFlash('success', 'Curso removido do carrinho');
 

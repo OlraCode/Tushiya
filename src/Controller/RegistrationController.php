@@ -16,6 +16,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
@@ -65,7 +66,7 @@ class RegistrationController extends AbstractController
     }
 
     #[Route('/register/teacher', name: 'app_register_teacher')]
-    public function registerTeacher(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager): Response
+    public function registerTeacher(Request $request, UserPasswordHasherInterface $userPasswordHasher, EntityManagerInterface $entityManager, Security $security): Response
     {
         $user = new User();
         $form = $this->createForm(RegistrationTeacherFormType::class, $user);
@@ -82,6 +83,8 @@ class RegistrationController extends AbstractController
 
             $entityManager->persist($user);
             $entityManager->flush();
+
+            $security->login($user);
 
             // generate a signed url and email it to the user
             $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
@@ -124,6 +127,7 @@ class RegistrationController extends AbstractController
         return $this->redirectToRoute('app_register');
     }
 
+    #[IsGranted('ROLE_USER')]
     #[Route('register/verify', name: 'app_user_verify', methods: ['GET'])]
     public function emailVerification(): Response
     {

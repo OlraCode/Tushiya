@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: CartItemRepository::class)]
 #[ORM\UniqueConstraint(
     name: "uniq_cart_product",
-    columns: ["cart_id", "course_id"]
+    columns: ["user_id", "course_id"]
 )]
 class CartItem
 {
