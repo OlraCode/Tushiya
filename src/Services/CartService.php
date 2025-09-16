@@ -28,11 +28,15 @@ class CartService
     public function addCourse(Course $course): void
     
     {
+        /** @var User */
         $user = $this->security->getUser();
 
         if ($this->hasCourse($course, $user)) {
             throw new \DomainException("Esse curso já foi adicionado ao carrinho");
             
+        }
+        if ($user->getCourses()->contains($course)) {
+            throw new \DomainException("Você não pode adicionar seu própio curso ao carrinho");
         }
         $cartItem = new CartItem;
         $cartItem->setCourse($course);

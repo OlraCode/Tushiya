@@ -41,7 +41,7 @@
                     {% if is_granted('ROLE_TEACHER') %}
                       <a href="{{ path('app_sent_courses') }}" class="dropdown-item">Cursos enviados</a>
                     {% endif %}
-                    <li><a class="dropdown-item" href="#">Meu perfil</a></li>
+                    <li><a class="dropdown-item" href="{{ path('app_perfil') }}">Meu perfil</a></li>
                     <li><a class="dropdown-item" href="{{ path('app_logout') }}">Sair</a></li>
                 </ul>
             </li>
