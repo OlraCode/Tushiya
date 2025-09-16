@@ -35,19 +35,17 @@ class RegistrationFormType extends AbstractType
                 'first_options' =>
                     [
                         'label' => 'Senha',
+                        'help' => 'A senha deve conter pelo menos 6 caracteres, incluindo: uma letra maiúscula, uma letra minúscula e um número.',
                         'attr' => ['autocomplete' => 'new-password'],
                         'constraints' => [
                             new NotBlank([
                                 'message' => 'Insira uma senha',
                             ]),
                             new Length([
-                                'min' => 6,
-                                'minMessage' => 'Senha deve conter no mínimo {{ limit }} caracteres',
-                                // max length allowed by Symfony for security reasons
-                                'max' => 20,
+                                'max' => 60,
                                 'maxMessage' => 'Senha pode conter no máximo {{ limit }} caracteres',
                             ]),
-                            new Regex('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)^', 'Senha deve conter pelo menos uma letra maiúscula, uma minuscula e um número.')]
+                            new Regex('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$^', 'Senha inválida')]
                     ],
                 'second_options' => ['label' => 'Confirmar Senha'],
                 'invalid_message' => 'As senhas não coincidem.',
