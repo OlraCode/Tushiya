@@ -33,15 +33,22 @@
                 <td>
                     <div class="d-flex">
 
-                        {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('app_course_show', {'id': course.id}) }}" class="btn btn-dark me-2">Detalhes</a>
+                        
+                        {% if is_granted('ROLE_ADMIN') or course.teacher == app.user %}
                             <a href="{{ path('app_course_edit', {'id': course.id}) }}" class="btn btn-warning me-2">Editar</a>
                         {% endif %}
 
                         {% if is_granted('ROLE_USER') %}
-                            <a href="{{ path('app_course_show', {'id': course.id}) }}" class="btn btn-dark me-2">Detalhes</a>
-                            <form action="{{ path('app_cart_new', {'id': course.id}) }}" method="POST">
-                                <button type="submit" class="btn btn-primary">Adicionar ao Carrinho</button>
-                            </form>
+                            {% if course in cart %}
+                                <form action="{{ path('app_cart_delete', {'id': course.id}) }}" method="POST">
+                                    <button type="submit" class="btn btn-outline-danger">Remover do Carrinho</button>
+                                </form>
+                            {% elseif course.teacher != app.user %}
+                                <form action="{{ path('app_cart_new', {'id': course.id}) }}" method="POST">
+                                    <button type="submit" class="btn btn-primary">Adicionar ao Carrinho</button>
+                                </form>
+                            {% endif %}
                         {% endif %}
 
                     </div>
