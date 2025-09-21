@@ -29,7 +29,7 @@ class VerifiedUserSubscriber implements EventSubscriberInterface
         $currentRoute = $event->getRequest()->attributes->get('_route');
 
         if (!$user->isVerified()) {
-            if ($currentRoute !== 'app_user_verify') {
+            if ($currentRoute !== 'app_user_verify' && $currentRoute !== 'app_verify_email' && $currentRoute !== 'app_send_email_verification') {
                 $url = $this->router->generate('app_user_verify');
                 $event->setResponse(new RedirectResponse($url));
             }
