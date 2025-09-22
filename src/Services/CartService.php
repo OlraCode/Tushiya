@@ -40,6 +40,10 @@ class CartService
         if ($user->getCourses()->contains($course)) {
             throw new \DomainException("Você não pode adicionar seu própio curso ao carrinho");
         }
+        if ($user->getPurchasedCourses()->contains($course)) {
+            throw new \DomainException("Esse curso já foi comprado");
+        }
+
         $cartItem = new CartItem;
         $cartItem->setCourse($course);
         $cartItem->setUser($user);
@@ -76,5 +80,13 @@ class CartService
         $price = array_reduce($courseList, fn ($value, Course $item) => bcadd($value, $item->getPrice(), 2), 0);
 
         return $price;
+    }
+
+    public function clear(): void
+    {
+        /** @var User */
+        $user = $this->security->getUser();
+        $user->getCartItems()->clear();
+        $this->entityManager->flush();
     }
 }

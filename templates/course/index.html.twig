@@ -44,6 +44,8 @@
                                 <form action="{{ path('app_cart_delete', {'id': course.id}) }}" method="POST">
                                     <button type="submit" class="btn btn-outline-danger">Remover do Carrinho</button>
                                 </form>
+                            {% elseif course in purchasedCourses %}
+                                <a href="{{ path('app_my_courses') }}" class="btn btn-success">Acessar Curso</a>
                             {% elseif course.teacher != app.user %}
                                 <form action="{{ path('app_cart_new', {'id': course.id}) }}" method="POST">
                                     <button type="submit" class="btn btn-primary">Adicionar ao Carrinho</button>

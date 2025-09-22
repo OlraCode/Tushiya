@@ -14,6 +14,10 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
+/**
+ * @method \App\Entity\User getUser()
+ */
+
 #[Route('/course')]
 final class CourseController extends AbstractController
 {
@@ -31,6 +35,7 @@ final class CourseController extends AbstractController
         return $this->render('course/index.html.twig', [
             'courses' => $courses,
             'cart' => $cartService->getCourses(),
+            'purchasedCourses' => $this->getUser()->getPurchasedCourses()
         ]);
     }
 
@@ -98,7 +103,7 @@ final class CourseController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_course_delete', methods: ['POST'])]
+    #[Route('/delete/{id}', name: 'app_course_delete', methods: ['POST'])]
     public function delete(Request $request, Course $course, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$course->getId(), $request->getPayload()->getString('_token'))) {
@@ -109,6 +114,27 @@ final class CourseController extends AbstractController
         $this->addFlash('success', 'Curso removido com sucesso');
 
         return $this->redirectToRoute('app_course_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/buy', name: 'app_buy_courses', methods: ['POST'])]
+    public function buy(CartService $cart, EntityManagerInterface $entityManager): Response
+    {
+        $courses = $cart->getCourses();
+        $this->getUser()->addPurchasedCourses($courses);
+        $entityManager->flush();
+
+        $cart->clear();
+
+        return $this->redirectToRoute('app_my_courses');
+    }
+
+    #[IsGranted('ROLE_USER')]
+    #[Route('/my-courses', name: 'app_my_courses', methods: ['GET'])]
+    public function myCourses(): Response
+    {
+        $courseList = $this->getUser()->getPurchasedCourses();
+        return $this->render('course/my_courses.html.twig', compact('courseList'));
     }
 
     #[IsGranted('ROLE_TEACHER')]

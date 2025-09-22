@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cursos Enviados{% endblock %}
+
+{% block body %}
+    
+    <h1>Meus Cursos</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Imagem</th>
+                <th>Título</th>
+                <th>Descrição</th>
+                <th>Categoria</th>
+                <th>Professor</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for course in courseList %}
+            <tr>
+                <td><img src="{{ asset('upload/coverImages/' ~ course.image) }}" alt="Capa" style="width: 120px"></td>
+                <td>{{ course.title }}</td>
+                <td>{{ course.description }}</td>
+                <td>{{ course.category }}</td>
+                <td>{{ course.teacher.name }}</td>
+                <td>
+                    <div class="d-flex">
+                        <a href="{{ path('app_course_show', {'id': course.id}) }}" class="btn btn-dark me-2">Detalhes</a>
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Nenhum curso encontrado</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

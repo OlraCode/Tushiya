@@ -62,10 +62,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Course::class, mappedBy: 'teacher', orphanRemoval: true)]
     private Collection $courses;
 
+    /**
+     * @var Collection<int, Course>
+     */
+    #[ORM\ManyToMany(targetEntity: Course::class)]
+    private Collection $purchasedCourses;
+
     public function __construct()
     {
         $this->cartItems = new ArrayCollection();
         $this->courses = new ArrayCollection();
+        $this->purchasedCourses = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -235,6 +242,32 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $course->setTeacher(null);
             }
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Course>
+     */
+    public function getPurchasedCourses(): Collection
+    {
+        return $this->purchasedCourses;
+    }
+
+    public function addPurchasedCourses(array $purchasedCourses): static
+    {
+        foreach ($purchasedCourses as $course) {
+            if (!$this->purchasedCourses->contains($course)) {
+                $this->purchasedCourses->add($course);
+            }
+        }
+
+        return $this;
+    }
+
+    public function removePurchasedCourse(Course $purchasedCourse): static
+    {
+        $this->purchasedCourses->removeElement($purchasedCourse);
 
         return $this;
     }
