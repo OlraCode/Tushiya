@@ -8,11 +8,14 @@ use App\Form\CourseType;
 use App\Services\CartService;
 use App\Repository\CourseRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Mime\Address;
 
 /**
  * @method \App\Entity\User getUser()
@@ -29,7 +32,7 @@ final class CourseController extends AbstractController
         if ($search) {
             $courses = $courseRepository->search($search);
         } else {
-            $courses = $courseRepository->findAll();
+            $courses = $courseRepository->findVerified();
         }
 
         return $this->render('course/index.html.twig', [
@@ -58,9 +61,9 @@ final class CourseController extends AbstractController
             $entityManager->persist($course);
             $entityManager->flush();
 
-            $this->addFlash('success', 'Curso adicionado com sucesso');
+            $this->addFlash('warning', 'Curso enviado para análise');
 
-            return $this->redirectToRoute('app_course_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_sent_courses', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('course/new.html.twig', [
@@ -90,11 +93,13 @@ final class CourseController extends AbstractController
                 $repository->addCover($course, $image);
             }
 
+            $course->setRefuseMessage(null);
+
             $entityManager->flush();
 
             $this->addFlash('success', 'Curso editado com sucesso');
 
-            return $this->redirectToRoute('app_course_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_sent_courses', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('course/edit.html.twig', [
@@ -124,6 +129,8 @@ final class CourseController extends AbstractController
         $this->getUser()->addPurchasedCourses($courses);
         $entityManager->flush();
 
+        $this->addFlash('success', 'Cursos comprados com sucesso');
+
         $cart->clear();
 
         return $this->redirectToRoute('app_my_courses');
@@ -145,6 +152,57 @@ final class CourseController extends AbstractController
         $user = $this->getUser();
         $courseList = $user->getCourses();
 
-        return $this->render('course/sent_courses.html.twig', compact('courseList'));
+        return $this->render('course/sent.html.twig', compact('courseList'));
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/analyse', name: 'app_course_analyse', methods: ['GET'])]
+    public function analyse(CourseRepository $repository): Response
+    {
+        $courses = $repository->findNotVerified();
+
+        return $this->render('course/analyse.html.twig', compact('courses'));
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/analyse/{id}/aprove', name: 'app_course_approve', methods: ['POST'])]
+    public function approve(Course $course, EntityManagerInterface $entityManager): Response
+    {
+        $course->setIsVerified(true);
+        $entityManager->flush();
+
+        $this->addFlash('success', 'Curso enviado para o catálogo.');
+
+        return $this->redirectToRoute('app_course_analyse');
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/analyse/{id}/refuse', name: 'app_course_refuse', methods: ['POST'])]
+    public function refuse(Request $request, Course $course, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
+    {
+        $message = $request->get('message');
+        if (!$message) {
+            $this->addFlash('danger', 'Motivo da recusa deve ser enviado.');
+            return $this->redirectToRoute('app_course_analyse');
+        }
+
+        $course->setRefuseMessage($message);
+        $entityManager->flush();
+
+        $email = (new TemplatedEmail())
+            ->from(new Address('contato@tushiya.com', 'Curso recusado'))
+            ->to((string) $course->getTeacher()->getEmail())
+            ->subject("Seu curso \"{$course->getTitle()}\" foi recusado")
+            ->htmlTemplate('course/refuse_email.html.twig')
+            ->context([
+                'course' => $course,
+            ])
+        ;
+
+        $mailer->send($email);
+
+        $this->addFlash('success', 'Mensagem de recusa enviada para o professor.');
+
+        return $this->redirectToRoute('app_course_analyse');
     }
 }

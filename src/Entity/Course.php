@@ -48,6 +48,12 @@ class Course
     #[ORM\JoinColumn(nullable: false)]
     private ?User $teacher = null;
 
+    #[ORM\Column]
+    private bool $isVerified = false;
+
+    #[ORM\Column(length: 120, nullable: true)]
+    private ?string $refuseMessage = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -133,6 +139,30 @@ class Course
     public function setTeacher(?User $teacher): static
     {
         $this->teacher = $teacher;
+
+        return $this;
+    }
+
+    public function isVerified(): ?bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): static
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    public function getRefuseMessage(): ?string
+    {
+        return $this->refuseMessage;
+    }
+
+    public function setRefuseMessage(?string $refuseMessage): static
+    {
+        $this->refuseMessage = $refuseMessage;
 
         return $this;
     }

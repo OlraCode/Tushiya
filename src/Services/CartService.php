@@ -43,6 +43,9 @@ class CartService
         if ($user->getPurchasedCourses()->contains($course)) {
             throw new \DomainException("Esse curso já foi comprado");
         }
+        if (!$course->isVerified()) {
+            throw new \DomainException("Esse curso ainda não foi verificado");
+        }
 
         $cartItem = new CartItem;
         $cartItem->setCourse($course);
