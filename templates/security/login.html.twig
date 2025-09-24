@@ -15,7 +15,8 @@
                 Você já está logado com o email {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
             </div>
         {% endif %}
-
+<div class="form-container">
+    <main>
         <h1 class="h3 mb-3 font-weight-normal">Entrar na conta</h1>
         <label for="username">E-mail</label>
         <input type="email" value="{{ last_username }}" name="_username" id="username" class="form-control mb-2" autocomplete="email" required autofocus>
@@ -31,7 +32,11 @@
         </button>
 
         <a href="{{ path('app_forgot_password_request') }}" class="alternative-link">Esqueci a senha</a>
-
+    </main>
+<div class="img-box">
+   <img src="/img/Fundologin.jpg" alt="Background">
+</div>
+</div>
         {#
             <div class="fazerl">lulaxbolsonaro
             capitulo 13
