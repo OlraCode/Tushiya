@@ -9,59 +9,21 @@
         <a href="{{ path('app_course_new') }}" class="btn btn-primary my-2">Adicionar Novo</a>
     {% endif %}
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Imagem</th>
-                <th>Título</th>
-                <th>Descrição</th>
-                <th>Categoria</th>
-                <th>Professor</th>
-                <th>Preço</th>
-                <th>Ações</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for course in courses %}
-            <tr>
-                <td><img src="{{ asset('upload/coverImages/' ~ course.image) }}" alt="Capa" style="width: 120px"></td>
-                <td>{{ course.title }}</td>
-                <td>{{ course.description }}</td>
-                <td>{{ course.category }}</td>
-                <td>{{ course.teacher.name }}</td>
-                <td>{{ course.price }}</td>
-                <td>
-                    <div class="d-flex">
-
-                        <a href="{{ path('app_course_show', {'id': course.id}) }}" class="btn btn-dark me-2">Detalhes</a>
-                        
-                        {% if is_granted('ROLE_ADMIN') or course.teacher == app.user %}
-                            <a href="{{ path('app_course_edit', {'id': course.id}) }}" class="btn btn-warning me-2">Editar</a>
-                        {% endif %}
-
-                        {% if is_granted('ROLE_USER') %}
-                            {% if course in cart %}
-                                <form action="{{ path('app_cart_delete', {'id': course.id}) }}" method="POST">
-                                    <button type="submit" class="btn btn-outline-danger">Remover do Carrinho</button>
-                                </form>
-                            {% elseif course in purchasedCourses %}
-                                <a href="{{ path('app_my_courses') }}" class="btn btn-success">Acessar Curso</a>
-                            {% elseif course.teacher != app.user %}
-                                <form action="{{ path('app_cart_new', {'id': course.id}) }}" method="POST">
-                                    <button type="submit" class="btn btn-primary">Adicionar ao Carrinho</button>
-                                </form>
-                            {% endif %}
-                        {% endif %}
-
+        <div class="container">
+            {% for course in courses %}
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ asset('upload/coverImages/' ~ course.image) }}" class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ course.title }}</h5>
+                        <p class="card-text mb-1">{{ course.teacher.name }}</p>
+                        <p class="card-text badge text-bg-dark">{{ course.category }}</p>
+                        <p class="card-text fs-5 fw-bold">R${{ course.price | number_format(2, ',', '.') }}</p>
+                        <a href="#" class="btn btn-primary">Adicionar ao carrinho</a>
                     </div>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="7">Nenhum curso encontrado</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+                </div>
+            {% else %}
+                <h3 colspan="7">Nenhum curso encontrado</h3>
+            {% endfor %}
+        </div>
 
 {% endblock %}

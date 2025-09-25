@@ -7,24 +7,24 @@ button.search:hover {
     background-color: #b96eff;
 }
 
-a.btn-outline-primary {
+nav a.btn-outline-primary {
     color: #8a2be2;
     border-color: #8a2be2; 
 }
 
-a.btn-outline-primary:hover {
+nav a.btn-outline-primary:hover {
     background-color: #8a2be2; 
     color: white;              
     border-color: #8a2be2;
 }
 
-a.btn-primary {
+nav a.btn-primary {
     background-color: #8a2be2; 
     border-color: #8a2be2;     
     color: white;              
 }
 
-a.btn-primary:hover {
+nav a.btn-primary:hover {
     background-color: #6a0dad; 
     border-color: #6a0dad;
 }
