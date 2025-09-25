@@ -35,11 +35,17 @@ final class CourseController extends AbstractController
             $courses = $courseRepository->findVerified();
         }
 
-        return $this->render('course/index.html.twig', [
-            'courses' => $courses,
-            'cart' => $cartService->getCourses(),
-            'purchasedCourses' => $this->getUser()->getPurchasedCourses()
-        ]);
+        $user = $this->getUser();
+
+        if ($user) {
+            return $this->render('course/index.html.twig', [
+                'courses' => $courses,
+                'cart' => $cartService->getCourses(),
+                'purchasedCourses' => $this->getUser()->getPurchasedCourses()
+            ]);
+        }
+
+        return $this->render('course/index.html.twig', compact('courses'));
     }
 
     #[Route('/new', name: 'app_course_new', methods: ['GET', 'POST'])]
