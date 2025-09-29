@@ -35,11 +35,22 @@ class CourseRepository extends ServiceEntityRepository
            return $this->createQueryBuilder('c')
                ->andWhere('c.title LIKE :val')
                ->setParameter('val', '%'.$search.'%')
+               ->andWhere('c.isVerified = 1')
                ->orderBy('c.title', 'ASC')
                ->setMaxResults(12)
                ->getQuery()
                ->getResult()
            ;
+       }
+
+       public function findVerified(): array
+       {
+            return $this->findBy(['isVerified' => 1]);
+       }
+
+       public function findNotVerified(): array
+       {
+            return $this->findBy(['isVerified' => 0, 'refuseMessage' => null]);
        }
 
     //    public function findOneBySomeField($value): ?Course
