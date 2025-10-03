@@ -64,10 +64,15 @@ final class CourseController extends AbstractController
 
             $course->setTeacher($this->getUser());
 
+            if ($this->isGranted('ROLE_ADMIN')) {
+                $course->setIsVerified(true);
+                $this->addFlash('success', 'Curso adicionado com sucesso');
+            } else {
+                $this->addFlash('warning', 'Curso enviado para análise');
+            }
+
             $entityManager->persist($course);
             $entityManager->flush();
-
-            $this->addFlash('warning', 'Curso enviado para análise');
 
             return $this->redirectToRoute('app_sent_courses', [], Response::HTTP_SEE_OTHER);
         }
@@ -100,6 +105,7 @@ final class CourseController extends AbstractController
             }
 
             $course->setRefuseMessage(null);
+            $course->setIsVerified(false);
 
             $entityManager->flush();
 
