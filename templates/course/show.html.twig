@@ -30,7 +30,11 @@
             </tr>
             <tr>
                 <th>Category</th>
-                <td>{{ course.category }}</td>
+                <td class="d-flex flex-column gap-2">
+                  {% for category in course.categories %}
+                    <div class="badge text-bg-dark">{{ category.name }}</div>
+                  {% endfor %}
+                </td>
             </tr>
             <tr>
                 <th>Image</th>

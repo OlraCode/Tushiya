@@ -25,7 +25,11 @@
                 <td><img src="{{ asset('upload/coverImages/' ~ course.image) }}" alt="Capa" style="width: 120px"></td>
                 <td>{{ course.title }}</td>
                 <td>{{ course.description }}</td>
-                <td>{{ course.category }}</td>
+                <td>
+                  {% for category in course.categories %}
+                    <div class="badge text-bg-dark">{{ category.name }}</div>
+                  {% endfor %}
+                </td>
                 <td>{{ course.teacher.name }}</td>
                 <td>{{ course.price }}</td>
                 <td>

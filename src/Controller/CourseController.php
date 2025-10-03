@@ -62,6 +62,8 @@ final class CourseController extends AbstractController
                 $repository->addCover($course, $image);
             }
 
+            $course->addCategory($form->get('category')->getData());
+
             $course->setTeacher($this->getUser());
 
             if ($this->isGranted('ROLE_ADMIN')) {
@@ -104,8 +106,14 @@ final class CourseController extends AbstractController
                 $repository->addCover($course, $image);
             }
 
+            $course->removeAllCategories();
+            $course->addCategory($form->get('category')->getData());
+
             $course->setRefuseMessage(null);
-            $course->setIsVerified(false);
+
+            if (!$this->isGranted('ROLE_ADMIN')) {
+                $course->setIsVerified(false);
+            }
 
             $entityManager->flush();
 

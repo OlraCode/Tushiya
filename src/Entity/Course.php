@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Entity\CartItem;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -17,20 +18,17 @@ class Course
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 25)]
+    #[ORM\Column(length: 40)]
     #[Assert\NotBlank()]
-    #[Assert\Length(min: 3, max: 25)]
+    #[Assert\Length(min: 3, max: 40)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 60)]
+    #[ORM\Column(length: 120)]
     #[Assert\NotBlank()]
-    #[Assert\Length(min: 8, max: 60)]
+    #[Assert\Length(min: 20, max: 120)]
     private ?string $description = null;
 
-    #[ORM\Column(length: 15)]
-    private ?string $category = null;
-
-    #[ORM\Column(length: 30, nullable: true)]
+    #[ORM\Column(length: 80, nullable: true)]
     private ?string $image = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 7, scale: 2)]
@@ -53,6 +51,17 @@ class Course
 
     #[ORM\Column(length: 120, nullable: true)]
     private ?string $refuseMessage = null;
+
+    /**
+     * @var Collection<int, Category>
+     */
+    #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'courses')]
+    private Collection $categories;
+
+    public function __construct()
+    {
+        $this->categories = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -79,18 +88,6 @@ class Course
     public function setDescription(string $description): static
     {
         $this->description = $description;
-
-        return $this;
-    }
-
-    public function getCategory(): ?string
-    {
-        return $this->category;
-    }
-
-    public function setCategory(string $category): static
-    {
-        $this->category = $category;
 
         return $this;
     }
@@ -163,6 +160,39 @@ class Course
     public function setRefuseMessage(?string $refuseMessage): static
     {
         $this->refuseMessage = $refuseMessage;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Category>
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(array $categories): static
+    {
+        foreach ($categories as $category) {
+            if (!$this->categories->contains($category)) {
+                $this->categories->add($category);
+            }
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): static
+    {
+        $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    public function removeAllCategories(): static
+    {
+        $this->categories->clear();
 
         return $this;
     }
