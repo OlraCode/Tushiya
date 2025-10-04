@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Entity\Course;
 use App\Form\CourseType;
+use App\Repository\CategoryRepository;
 use App\Services\CartService;
 use App\Repository\CourseRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,27 +26,27 @@ use Symfony\Component\Mime\Address;
 final class CourseController extends AbstractController
 {
     #[Route(name: 'app_course_index', methods: ['GET'])]
-    public function index(CourseRepository $courseRepository, CartService $cartService, Request $request): Response
+    public function index(CourseRepository $courseRepository, CartService $cartService, Request $request, CategoryRepository $categoryRepository): Response
     {
         $search = $request->get('search');
+        $category = $request->get('category');
+        $order = $request->get('order');
 
-        if ($search) {
-            $courses = $courseRepository->search($search);
-        } else {
-            $courses = $courseRepository->findVerified();
-        }
+        $courses = $courseRepository->search($search, $category, $order);
+        $categories = $categoryRepository->findInOrder();
 
         $user = $this->getUser();
 
         if ($user) {
             return $this->render('course/index.html.twig', [
                 'courses' => $courses,
+                'categories' => $categories,
                 'cart' => $cartService->getCourses(),
-                'purchasedCourses' => $this->getUser()->getPurchasedCourses()
+                'purchasedCourses' => $this->getUser()->getPurchasedCourses(),
             ]);
         }
 
-        return $this->render('course/index.html.twig', compact('courses'));
+        return $this->render('course/index.html.twig', compact('courses', 'categories'));
     }
 
     #[Route('/new', name: 'app_course_new', methods: ['GET', 'POST'])]

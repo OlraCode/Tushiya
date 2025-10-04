@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Course;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Query\Parameter;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -27,31 +29,38 @@ class CourseRepository extends ServiceEntityRepository
         $course->setImage($name);
     }
 
-       /**
-        * @return Course[] Returns an array of Course objects
-        */
-       public function search($search): array
-       {
-           return $this->createQueryBuilder('c')
-               ->andWhere('c.title LIKE :val')
-               ->setParameter('val', '%'.$search.'%')
-               ->andWhere('c.isVerified = 1')
-               ->orderBy('c.title', 'ASC')
-               ->setMaxResults(12)
-               ->getQuery()
-               ->getResult()
-           ;
-       }
+    /**
+     * @return Course[] Returns an array of Course objects
+     */
+    public function search(?string $search, ?string $category, ?string $order): array
+    {
+        $query = $this->createQueryBuilder('c')->where('c.isVerified = 1');
 
-       public function findVerified(): array
-       {
-            return $this->findBy(['isVerified' => 1]);
-       }
+        if (!empty($search)) {
+            $query
+                ->andWhere('c.title LIKE :search')
+                ->setParameter('search', '%'.$search.'%');
+        }
+        if (!empty($category)) {
+            $query
+                ->join('c.categories', 'cat')
+                ->andWhere('cat.slug = :category')
+                ->setParameter('category', $category);
+        }
+        if (!empty($order)) {
+            $orderList = ['title', 'id', 'price'];
+            if (in_array($order, $orderList)) {
+                $query->orderBy("c.{$order}", 'ASC');
+            }
+        }
 
-       public function findNotVerified(): array
-       {
-            return $this->findBy(['isVerified' => 0, 'refuseMessage' => null]);
-       }
+        return $query->getQuery()->getResult();
+    }
+
+    public function findNotVerified(): array
+    {
+        return $this->findBy(['isVerified' => 0, 'refuseMessage' => null]);
+    }
 
     //    public function findOneBySomeField($value): ?Course
     //    {
