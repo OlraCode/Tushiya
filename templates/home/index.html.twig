@@ -4,8 +4,74 @@
 
 {% block body %}
 
-  <div class="d-flex justify-content-center">
-    <h1 class="fs-8 text-align-center">HomePage</h1>
-  </div>
+<link rel="stylesheet" href={{asset('css/index.css')}}>
+
+  <!-- Hero -->
+  <section class="hero d-flex flex-wrap align-items-center justify-content-between p-5">
+    <div class="hero-text col-lg-6 col-md-12">
+      <h1 class="fw-bold display-5 mb-3 text-primary">Aprenda e ensine com facilidade</h1>
+      <p class="lead mb-4 text-secondary">
+        No Tushiya, professores criam cursos e alunos aprendem do seu jeito.
+      </p>
+      <div class="d-flex gap-3">
+        <button class="btn btn-primary px-4 py-2">Sou Aluno</button>
+        <button class="btn btn-outline-primary px-4 py-2">Sou Professor</button>
+      </div>
+    </div>
+
+    <div class="col-lg-5 col-md-12 text-center mt-4 mt-lg-0">
+      <img src="/img/aprendizado.png"
+           alt="Ilustração de aprendizado online"
+           class="img-fluid hero-img">
+    </div>
+  </section>
+
+  <!-- Como funciona -->
+  <section class="features text-center py-5 bg-white">
+    <div class="container">
+      <h2 class="text-primary mb-5 fw-bold">Como funciona</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="feature card shadow-sm border-0 p-4 h-100">
+            <h3 class="mb-3 fs-4">👩‍🏫 Crie cursos</h3>
+            <p>Professores podem criar e enviar seus cursos de forma rápida e simples.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature card shadow-sm border-0 p-4 h-100">
+            <h3 class="mb-3 fs-4">🧑‍🎓 Aprenda online</h3>
+            <p>Alunos acessam materiais de qualidade e acompanham o progresso.</p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature card shadow-sm border-0 p-4 h-100">
+            <h3 class="mb-3 fs-4">⭐ Compartilhe conhecimento</h3>
+            <p>Uma comunidade conectada pela vontade de ensinar e aprender.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefícios -->
+  <section class="benefits text-center py-5 bg-light-purple">
+    <div class="container">
+      <h2 class="fw-bold text-primary mb-3">Por que escolher Tushiya?</h2>
+      <p class="lead text-secondary mx-auto" style="max-width: 700px;">
+        Nosso portal é feito para facilitar a educação digital — sem complicações,
+        com foco na experiência de professores e alunos.
+      </p>
+    </div>
+  </section>
+
+  <!-- Rodapé -->
+  <footer class="text-center text-white py-4 mt-5" style="background-color: #4a2480;">
+    <p class="mb-1">© 2025 Tushiya — Todos os direitos reservados.</p>
+    <div class="footer-links">
+      <a href="#" class="text-light text-decoration-none mx-2">Termos de uso</a>
+      <a href="#" class="text-light text-decoration-none mx-2">Privacidade</a>
+      <a href="#" class="text-light text-decoration-none mx-2">Contato</a>
+    </div>
+  </footer>
 
 {% endblock %}

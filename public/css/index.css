@@ -1,0 +1,50 @@
+body {
+  background-color: #fff;
+  color: #333;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.text-primary {
+  color: #6f42c1 !important;
+}
+
+.btn-primary {
+  background-color: #6f42c1;
+  border-color: #6f42c1;
+}
+
+.btn-primary:hover {
+  background-color: #5a32a8;
+  border-color: #5a32a8;
+}
+
+.btn-outline-primary {
+  color: #6f42c1;
+  border-color: #6f42c1;
+}
+
+.btn-outline-primary:hover {
+  background-color: #6f42c1;
+  color: #fff;
+}
+
+.hero {
+  background-color: #f8f5ff;
+}
+
+.hero-img {
+  max-width: 400px;
+}
+
+.feature.card {
+  background-color: #f8f5ff;
+  border-radius: 15px;
+}
+
+.bg-light-purple {
+  background-color: #f3eaff;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}
