@@ -1,0 +1,17 @@
+.course-card {
+    cursor: pointer;
+    transition: .25s;
+    text-decoration: none;
+}
+.course-card:hover {
+    translate: 0 -3px;
+    opacity: 80%;
+}
+
+@media (max-width: 992px) {
+    .filter-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
