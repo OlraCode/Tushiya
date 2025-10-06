@@ -61,10 +61,11 @@ body {
 /* Formulário fullscreen */
 .form-container {
     display: flex;
+    margin: auto;
     flex-direction: column;
     padding: 15px;
-    width: 100%;
-    max-width: 100%;
+    width: 90%;
+    max-width: 800px;
     background: #fff;
     border-radius: 8px;
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);

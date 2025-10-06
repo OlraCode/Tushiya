@@ -14,8 +14,8 @@
         No Tushiya, professores criam cursos e alunos aprendem do seu jeito.
       </p>
       <div class="d-flex gap-3">
-        <button class="btn btn-primary px-4 py-2">Sou Aluno</button>
-        <button class="btn btn-outline-primary px-4 py-2">Sou Professor</button>
+        <a class="btn btn-primary px-4 py-2" href="{{ path('app_register') }}">Sou Aluno</a>
+        <a class="btn btn-outline-primary px-4 py-2" href="{{ path('app_register_teacher') }}">Sou Professor</a>
       </div>
     </div>
 
@@ -33,14 +33,14 @@
       <div class="row g-4">
         <div class="col-md-4">
           <div class="feature card shadow-sm border-0 p-4 h-100">
-            <h3 class="mb-3 fs-4">👩‍🏫 Crie cursos</h3>
-            <p>Professores podem criar e enviar seus cursos de forma rápida e simples.</p>
+            <h3 class="mb-3 fs-4">🧑‍🎓 Aprenda online</h3>
+            <p>Alunos acessam materiais de qualidade e acompanham o progresso.</p>
           </div>
         </div>
         <div class="col-md-4">
           <div class="feature card shadow-sm border-0 p-4 h-100">
-            <h3 class="mb-3 fs-4">🧑‍🎓 Aprenda online</h3>
-            <p>Alunos acessam materiais de qualidade e acompanham o progresso.</p>
+            <h3 class="mb-3 fs-4">👩‍🏫 Crie cursos</h3>
+            <p>Professores podem criar e enviar seus cursos de forma rápida e simples.</p>
           </div>
         </div>
         <div class="col-md-4">
@@ -64,14 +64,7 @@
     </div>
   </section>
 
-  <!-- Rodapé -->
-  <footer class="text-center text-white py-4 mt-5" style="background-color: #4a2480;">
-    <p class="mb-1">© 2025 Tushiya — Todos os direitos reservados.</p>
-    <div class="footer-links">
-      <a href="#" class="text-light text-decoration-none mx-2">Termos de uso</a>
-      <a href="#" class="text-light text-decoration-none mx-2">Privacidade</a>
-      <a href="#" class="text-light text-decoration-none mx-2">Contato</a>
-    </div>
-  </footer>
+  {% include 'home/_footer.html.twig' %}
+
 
 {% endblock %}

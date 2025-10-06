@@ -12,25 +12,26 @@
         <a href="{{ path('app_course_new') }}" class="btn btn-primary my-2">Adicionar Novo</a>
     {% endif %}
 
-    <form action="{{ path('app_course_index') }}" class="filter-form">
-        <select class="form-select my-1 me-1 d-inline" style="width: 250px" aria-label="Default select example" name="category">
-            <option selected value="">Filtrar por categoria</option>
-            {% for category in categories %}
-                <option value="{{ category.slug }}">{{ category.name }}</option>
-            {% endfor %}
-        </select>
+    <form action="{{ path('app_course_index') }}" class="filter-form d-flex">
+        <div class="select-container">
+            <select class="form-select my-1 me-1 d-inline" style="width: 250px" aria-label="Default select example" name="category">
+                <option selected value="">Filtrar por categoria</option>
+                {% for category in categories %}
+                    <option value="{{ category.slug }}">{{ category.name }}</option>
+                {% endfor %}
+            </select>
+            <select class="form-select my-1 me-1 d-inline" style="width: 250px;" aria-label="Default select example" name="order">
+                <option selected value="">Ordenar por:</option>
+                <option value="id">Mais recente</option>
+                <option value="title">Título</option>
+                <option value="price">Preço</option>
+            </select>
+        </div>
 
-        <select class="form-select my-1 me-1 d-inline" style="width: 250px" aria-label="Default select example" name="order">
-            <option selected value="">Ordenar por:</option>
-            <option value="id">Mais recente</option>
-            <option value="title">Título</option>
-            <option value="price">Preço</option>
-        </select>
-
-        <button class="btn rounded-circle p-2 border search" type="submit"><img src="{{ asset('img/search.png') }}" alt="Buscar" style="width: 25px"></button>
+        <button class="btn rounded-circle p-2 mx-2 border search" type="submit"><img src="{{ asset('img/search.png') }}" alt="Buscar" style="width: 25px"></button>
     </form>
 
-        <div class="container d-flex flex-wrap gap-4 mt-3 justify-content-center">
+        <div class="container d-flex flex-wrap gap-4 mt-3 course-container">
             {% for course in courses %}
                 <a class="card course-card" style="width: 18rem;" href="{{ path('app_course_show', {id: course.id}) }}">
                     <img src="{{ asset('upload/coverImages/' ~ course.image) }}" class="card-img-top" style="height: 200px">
