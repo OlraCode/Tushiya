@@ -85,7 +85,13 @@ make create-db
 make migrate
 ```
 
-### 5️⃣ Rodar o sistema de mensageria
+### 5️⃣ Rodar a fixture para popular a tabela de usuários
+Cria usuários de teste para navegar na plataforma.
+```
+make fixture
+```
+
+### 6️⃣ Rodar o sistema de mensageria
 Responsável por processar as filas de mensagens e envio de emails.
 ```
 make messenger
@@ -93,3 +99,12 @@ make messenger
 <br>
 
 Após isso a plataforma estará acessível em [localhost:8000](http://localhost:8000)
+
+
+ ### 🧑 Usuários criados automaticamente:
+  
+  | Email               | Senha       | Papel  |
+  |--------------------|------------|--------|
+  | admin@example.com   | Admin1234  | Admin  |
+  | teacher@example.com   | Teacher1234  | Professor  |
+  | user@example.com    | User1234   | User   |
