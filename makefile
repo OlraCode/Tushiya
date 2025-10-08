@@ -12,3 +12,5 @@ migrate:
 	docker exec app php bin/console doctrine:migrations:migrate
 messenger:
 	docker exec app php bin/console messenger:consume
+fixture:
+	docker exec app php bin/console doctrine:fixtures:load --append
