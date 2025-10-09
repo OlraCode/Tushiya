@@ -51,7 +51,7 @@ class RegistrationController extends AbstractController
                 (new TemplatedEmail())
                     ->from(new Address('contato@tushiya.com', 'Tushiya'))
                     ->to((string) $user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('Por favor confirme seu e-mail')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
@@ -91,7 +91,7 @@ class RegistrationController extends AbstractController
                 (new TemplatedEmail())
                     ->from(new Address('contato@tushiya.com', 'Tushiya'))
                     ->to((string) $user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('Por favor confirme seu e-mail')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
 
@@ -144,7 +144,7 @@ class RegistrationController extends AbstractController
                 (new TemplatedEmail())
                     ->from(new Address('contato@tushiya.com', 'Tushiya'))
                     ->to((string) $user->getEmail())
-                    ->subject('Please Confirm your Email')
+                    ->subject('Por favor confirme seu e-mail')
                     ->htmlTemplate('registration/confirmation_email.html.twig')
             );
         return $this->redirectToRoute('app_user_verify');

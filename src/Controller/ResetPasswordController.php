@@ -163,7 +163,7 @@ class ResetPasswordController extends AbstractController
         $email = (new TemplatedEmail())
             ->from(new Address('reset@tushiya.com', 'Resetar Senha'))
             ->to((string) $user->getEmail())
-            ->subject('Your password reset request')
+            ->subject('Resete sua senha')
             ->htmlTemplate('reset_password/email.html.twig')
             ->context([
                 'resetToken' => $resetToken,
