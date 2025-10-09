@@ -1,0 +1,84 @@
+
+body {
+  background-color: #f8f5ff;
+  color: #212529;
+}
+
+/* Título principal */
+h1 {
+  font-weight: 700;
+  color: #6f42c1;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+/*Tabela*/
+.table {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(111, 66, 193, 0.1);
+}
+
+.table thead {
+  background-color: #ede6ff;
+}
+
+.table th {
+  color: #6f42c1;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-bottom: none;
+}
+
+.table td {
+  vertical-align: middle;
+  border-color: #f1e8ff;
+}
+
+/* Imagens */
+.table img {
+  border-radius: 8px;
+  object-fit: cover;
+  width: 120px;
+  height: 80px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Botões */
+.btn-dark {
+  background-color: #6f42c1;
+  border: none;
+  transition: all 0.2s ease-in-out;
+}
+
+.btn-dark:hover {
+  background-color: #5a32a8;
+  transform: translateY(-2px);
+}
+
+/* Categorias  */
+.badge.text-bg-dark {
+  background-color: #6f42c1 !important;
+  color: #fff !important;
+  font-size: 0.85rem;
+  padding: 0.5em 0.7em;
+  border-radius: 6px;
+  margin: 2px;
+}
+
+/* Tabela Responsiva  */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  .table img {
+    width: 80px;
+    height: 60px;
+  }
+
+  .table td, .table th {
+    font-size: 0.85rem;
+  }
+}
