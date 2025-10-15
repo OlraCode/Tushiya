@@ -63,6 +63,8 @@
         {% endfor %}
     </div>
 
+{% if is_granted('ROLE_USER') %}
     {% include 'course/_chat.html.twig' %}
+{% endif %}
 
 {% endblock %}

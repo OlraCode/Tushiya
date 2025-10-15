@@ -42,8 +42,8 @@ services:
       - TZ=America/Sao_Paulo
       - N8N_ENCRYPTION_KEY=secretkey123
       - N8N_CORS_ALLOW_ORIGIN=*
-      - N8N_CORS_ALLOW_HEADERS=Authorization,Content-Type,Origin,Accept
-      - N8N_CORS_ALLOW_METHODS=GET,POST,OPTIONS
+      - N8N_CORS_ALLOW_METHODS=GET,POST,PUT,PATCH,DELETE,OPTIONS
+      - N8N_CORS_ALLOW_HEADERS=Content-Type,Authorization
       - WEBHOOK_URL=http://localhost:5678/
       - N8N_EDITOR_BASE_URL=http://localhost:5678/
     volumes:
