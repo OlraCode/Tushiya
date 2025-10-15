@@ -28,5 +28,27 @@ services:
     volumes:
       - db_data:/var/lib/mysql
 
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    ports:
+      - 5678:5678
+    environment:
+      - N8N_BASIC_AUTH_ACTIVE=false
+      - N8N_HOST=0.0.0.0
+      - N8N_PORT=5678
+      - NODE_ENV=development
+      - GENERIC_TIMEZONE=America/Sao_Paulo
+      - TZ=America/Sao_Paulo
+      - N8N_ENCRYPTION_KEY=secretkey123
+      - N8N_CORS_ALLOW_ORIGIN=*
+      - N8N_CORS_ALLOW_HEADERS=Authorization,Content-Type,Origin,Accept
+      - N8N_CORS_ALLOW_METHODS=GET,POST,OPTIONS
+      - WEBHOOK_URL=http://localhost:5678/
+      - N8N_EDITOR_BASE_URL=http://localhost:5678/
+    volumes:
+      - ./n8n_data:/home/node/.n8n
+    restart: unless-stopped
+
 volumes:
   db_data:

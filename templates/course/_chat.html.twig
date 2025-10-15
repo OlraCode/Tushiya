@@ -1,0 +1,74 @@
+<!-- Botão flutuante -->
+<button type="button"
+        class="btn btn-primary rounded-circle"
+        data-bs-toggle="modal"
+        data-bs-target="#chatModal"
+        style="position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; font-size: 24px; z-index: 1050;">
+  💬
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="chatModal" tabindex="-1" aria-labelledby="chatModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-end" style="
+         position: fixed;
+         bottom: 90px;
+         right: 20px;
+         margin: 0;
+         width: 350px;
+         max-width: 90vw;
+         pointer-events: none;
+       ">
+    <div class="modal-content" style="width: 350px;">
+      <div class="modal-header">
+        <h5 class="modal-title" id="chatModalLabel">Chat de Cursos</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body d-flex flex-column" style="height: 400px; overflow-y: auto;" id="chatMessages"></div>
+      <div class="modal-footer">
+        <input type="text" class="form-control" id="chatInput" placeholder="Escreva sua pergunta...">
+        <button class="btn btn-primary" id="sendBtn">Enviar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const chatMessages = document.getElementById('chatMessages');
+  const chatInput = document.getElementById('chatInput');
+  const sendBtn = document.getElementById('sendBtn');
+
+  function addMessage(text, sender = 'user') {
+    const msg = document.createElement('div');
+    msg.textContent = text;
+    msg.className = sender === 'user'
+      ? 'text-white bg-primary p-2 rounded mb-2 align-self-end'
+      : 'bg-light p-2 rounded mb-2';
+    msg.style.maxWidth = '80%';
+    chatMessages.appendChild(msg);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  async function sendMessage() {
+    const userMessage = chatInput.value.trim();
+    if (!userMessage) return;
+
+    addMessage(userMessage, 'user');
+    chatInput.value = '';
+
+    const response = await fetch('http://localhost:5678/webhook/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ message: userMessage })
+    });
+
+    const data = await response.json();
+    addMessage(data.reply || 'Erro ao obter resposta', 'bot');
+  }
+
+  sendBtn.addEventListener('click', sendMessage);
+  chatInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendMessage();
+  });
+});
+</script>

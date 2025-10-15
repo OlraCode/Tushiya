@@ -31,36 +31,38 @@
         <button class="btn rounded-circle p-2 mx-2 border search" type="submit"><img src="{{ asset('img/search.png') }}" alt="Buscar" style="width: 25px"></button>
     </form>
 
-        <div class="container d-flex flex-wrap gap-4 mt-3 course-container">
-            {% for course in courses %}
-                <a class="card course-card" style="width: 18rem;" href="{{ path('app_course_show', {id: course.id}) }}">
-                    <img src="{{ asset('upload/coverImages/' ~ course.image) }}" class="card-img-top" style="height: 200px">
-                    <div class="card-body d-flex flex-column">
-                        <h5 class="card-title">{{ course.title }}</h5>
-                        <p class="card-text mb-1">{{ course.teacher.name }}</p>
-                        <p class="card-text fs-5 fw-bold">R${{ course.price | number_format(2, ',', '.') }}</p>
-                        {% if is_granted('ROLE_USER') %}
-                            {% if course.teacher != app.user %}
-                                {% if course in cart %}
-                                    <form action="{{ path('app_cart_delete', {'id': course.id}) }}" method="POST" class="mt-auto d-flex flex-column">
-                                        <button type="submit" class="btn btn-outline-danger me-2">Remover do carrinho</button>
-                                    </form>
-                                {% else %}
-                                    <form action="{{ path('app_cart_new', {'id': course.id}) }}" method="POST" class="mt-auto d-flex flex-column">
-                                        <button type="submit" class="btn btn-success me-2">Adicionar ao carrinho</button>
-                                    </form>
-                                {% endif %}
+    <div class="container d-flex flex-wrap gap-4 mt-3 course-container">
+        {% for course in courses %}
+            <a class="card course-card" style="width: 18rem;" href="{{ path('app_course_show', {id: course.id}) }}">
+                <img src="{{ asset('upload/coverImages/' ~ course.image) }}" class="card-img-top" style="height: 200px">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">{{ course.title }}</h5>
+                    <p class="card-text mb-1">{{ course.teacher.name }}</p>
+                    <p class="card-text fs-5 fw-bold">R${{ course.price | number_format(2, ',', '.') }}</p>
+                    {% if is_granted('ROLE_USER') %}
+                        {% if course.teacher != app.user %}
+                            {% if course in cart %}
+                                <form action="{{ path('app_cart_delete', {'id': course.id}) }}" method="POST" class="mt-auto d-flex flex-column">
+                                    <button type="submit" class="btn btn-outline-danger me-2">Remover do carrinho</button>
+                                </form>
                             {% else %}
-                                <form action="{{ path('app_course_edit', {'id': course.id}) }}" class="mt-auto d-flex flex-column">
-                                    <button type="submit" class="btn btn-warning">Editar</button>
+                                <form action="{{ path('app_cart_new', {'id': course.id}) }}" method="POST" class="mt-auto d-flex flex-column">
+                                    <button type="submit" class="btn btn-success me-2">Adicionar ao carrinho</button>
                                 </form>
                             {% endif %}
+                        {% else %}
+                            <form action="{{ path('app_course_edit', {'id': course.id}) }}" class="mt-auto d-flex flex-column">
+                                <button type="submit" class="btn btn-warning">Editar</button>
+                            </form>
                         {% endif %}
-                    </div>
-                </a>
-            {% else %}
-                <h3 colspan="7">Nenhum curso encontrado</h3>
-            {% endfor %}
-        </div>
+                    {% endif %}
+                </div>
+            </a>
+        {% else %}
+            <h3 colspan="7">Nenhum curso encontrado</h3>
+        {% endfor %}
+    </div>
+
+    {% include 'course/_chat.html.twig' %}
 
 {% endblock %}
