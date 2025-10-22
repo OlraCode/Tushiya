@@ -23,7 +23,7 @@
         
         <h1>Valor Total: R${{ totalPrice | number_format(2, ',', '.') }}</h1>
 
-        <form action="{{ path('app_buy_courses') }}" method="POST">
+        <form action="{{ path('app_payment') }}" method="POST">
             <button type="submit" class="btn btn-success">Comprar</button>
         </form>
 
