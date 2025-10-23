@@ -5,7 +5,12 @@
 {% block body %}
     
     <h1>Perfil</h1>
-
+    <br>
     <h2>Nome: {{ app.user.name }}</h2>
+
+    {% if is_granted('ROLE_TEACHER') %}
+        <h2>Matéria: {{ app.user.subject }}</h2>
+        <h2>Descrição profissional: {{ app.user.description }}</h2>
+    {% endif %}
 
 {% endblock %}

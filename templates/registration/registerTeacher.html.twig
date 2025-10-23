@@ -20,10 +20,11 @@
         {{ form_start(registrationForm) }}
             {{ form_row(registrationForm.name) }}
             {{ form_row(registrationForm.subject) }}
+            {{ form_row(registrationForm.description) }}
             {{ form_row(registrationForm.email) }}
             {{ form_row(registrationForm.plainPassword) }}
-            {{ form_row(registrationForm.agreeTerms) }}
-            <button type="submit" class="btn btn-success mb-1">Register</button>
+            {{ form_row(registrationForm.agreeTerms, {label: 'Aceito os <a href="/terms" target="_blank">Termos</a>'}) }}
+            <button type="submit" class="btn btn-success mb-1">Cadastrar</button>
         
         {{ form_end(registrationForm) }}
     </div>

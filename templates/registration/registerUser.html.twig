@@ -22,9 +22,9 @@
                     {{ form_row(registrationForm.email) }}
                     <div class="form-group">
                     {{ form_row(registrationForm.plainPassword, { label: 'Senha'}) }}
-                    {{ form_row(registrationForm.agreeTerms) }}
+                    {{ form_row(registrationForm.agreeTerms, {label: 'Aceito os <a href="/terms" target="_blank">Termos</a>'}) }}
 
-                    <button type="submit" class="btn btn-success mb-1">Register</button>
+                    <button type="submit" class="btn btn-success mb-1">Cadastrar</button>
                     
                 {{ form_end(registrationForm) }}
             </div>

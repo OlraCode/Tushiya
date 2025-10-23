@@ -18,14 +18,14 @@ class Course
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 40)]
+    #[ORM\Column(length: 80)]
     #[Assert\NotBlank()]
-    #[Assert\Length(min: 3, max: 40)]
+    #[Assert\Length(min: 3, max: 80)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 120)]
+    #[ORM\Column(length: 255)]
     #[Assert\NotBlank()]
-    #[Assert\Length(min: 20, max: 120)]
+    #[Assert\Length(min: 20, max: 255)]
     private ?string $description = null;
 
     #[ORM\Column(length: 80, nullable: true)]

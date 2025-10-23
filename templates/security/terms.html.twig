@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Política de Privacidade - Tushiya{% endblock %}
+
+{% block body %}
+<div class="container my-5">
+  <h1 class="mb-3 text-center">Política de Privacidade – Tushiya</h1>
+  <p class="text-muted text-center">Última atualização: 23 de outubro de 2025</p>
+
+  <p>A <strong>Tushiya</strong> valoriza a sua privacidade e está comprometida em proteger os dados pessoais de todos os usuários da plataforma. Esta Política de Privacidade descreve como coletamos, utilizamos, armazenamos e protegemos as suas informações, em conformidade com a <strong>Lei nº 13.709/2018 – Lei Geral de Proteção de Dados (LGPD)</strong>.</p>
+
+  <hr>
+
+  <h4>1. Dados coletados</h4>
+  <p>Durante o uso da plataforma Tushiya, podemos coletar os seguintes dados pessoais:</p>
+  <ul>
+    <li><strong>Dados de cadastro:</strong> nome completo, CPF, e-mail, senha (criptografada), telefone, endereço e dados bancários (quando aplicável).</li>
+    <li><strong>Dados de uso:</strong> cursos acessados, progresso, comentários, avaliações, IP, data/hora de acesso e informações do dispositivo.</li>
+  </ul>
+
+  <h4>2. Finalidade do tratamento dos dados</h4>
+  <p>Os dados pessoais são utilizados para:</p>
+  <ul>
+    <li>Gerenciar contas de usuário;</li>
+    <li>Emitir certificados e notas fiscais;</li>
+    <li>Processar pagamentos e transações;</li>
+    <li>Enviar comunicações sobre cursos e suporte;</li>
+    <li>Cumprir obrigações legais e fiscais;</li>
+    <li>Garantir segurança e prevenção a fraudes.</li>
+  </ul>
+
+  <h4>3. Compartilhamento de dados</h4>
+  <p>A Tushiya não vende nem aluga dados pessoais. O compartilhamento ocorre apenas quando necessário, como:</p>
+  <ul>
+    <li>Com prestadores de serviço (pagamentos, hospedagem, emissão de notas fiscais);</li>
+    <li>Por exigência legal ou judicial;</li>
+    <li>Com professores dos cursos em que o aluno está matriculado (apenas nome e e-mail, quando necessário).</li>
+  </ul>
+
+  <h4>4. Armazenamento e segurança</h4>
+  <ul>
+    <li>Os dados são armazenados em servidores seguros, com medidas de proteção adequadas;</li>
+    <li>Senhas são criptografadas e inacessíveis à equipe;</li>
+    <li>O acesso é restrito a colaboradores autorizados e comprometidos com a confidencialidade;</li>
+    <li>Em caso de incidente de segurança, os usuários afetados serão notificados conforme a LGPD.</li>
+  </ul>
+
+  <h4>5. Tempo de retenção dos dados</h4>
+  <p>Os dados são mantidos:</p>
+  <ul>
+    <li>Enquanto o usuário possuir conta ativa;</li>
+    <li>Enquanto houver obrigações legais ou fiscais;</li>
+    <li>Pelo prazo mínimo de 6 meses, conforme o Marco Civil da Internet.</li>
+  </ul>
+  <p>Após esse período, os dados poderão ser <strong>anonimizados</strong> ou <strong>excluídos permanentemente</strong>.</p>
+
+  <h4>6. Direitos do titular dos dados</h4>
+  <p>O usuário pode, a qualquer momento:</p>
+  <ul>
+    <li>Confirmar se há tratamento de seus dados;</li>
+    <li>Solicitar acesso, atualização, correção ou exclusão;</li>
+    <li>Revogar o consentimento;</li>
+    <li>Solicitar portabilidade dos dados;</li>
+    <li>Obter informações sobre compartilhamento de dados.</li>
+  </ul>
+  <p>Entre em contato através do e-mail: <a href="mailto:privacidade@tushiya.com.br">privacidade@tushiya.com.br</a></p>
+
+  <h4>7. Cookies e tecnologias similares</h4>
+  <p>A Tushiya utiliza cookies para manter o usuário autenticado, salvar preferências e coletar estatísticas. O uso de cookies pode ser desativado no navegador, mas isso pode limitar algumas funcionalidades.</p>
+
+  <h4>8. Menores de idade</h4>
+  <p>O uso da plataforma é permitido apenas a maiores de 18 anos. Usuários menores devem possuir autorização expressa dos responsáveis legais.</p>
+
+  <h4>9. Alterações nesta Política</h4>
+  <p>A Tushiya poderá atualizar esta Política a qualquer momento, publicando a nova versão nesta página. Recomendamos que o usuário revise periodicamente este documento.</p>
+
+  <h4>10. Encarregado de Proteção de Dados (DPO)</h4>
+  <p>
+    <strong>Nome:</strong> Encarregado de Dados – Tushiya<br>
+    <strong>E-mail:</strong> <a href="mailto:privacidade@tushiya.com.br">privacidade@tushiya.com.br</a>
+  </p>
+
+  <h4>11. Disposições finais</h4>
+  <p>Esta Política é regida pelas leis da República Federativa do Brasil. Fica eleito o foro da comarca de <strong>[Rio de Janeiro/RJ]</strong> para resolver quaisquer controvérsias relacionadas a este documento.</p>
+
+  <div class="mt-4">
+    <a href="{{ path('app_register') }}" class="btn btn-secondary">Voltar ao cadastro</a>
+  </div>
+</div>
+{% endblock %}
