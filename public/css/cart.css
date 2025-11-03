@@ -1,0 +1,54 @@
+
+.container {
+    background-color: #f8f5ff; 
+    border-radius: 12px;
+}
+
+h1, h3, h5 {
+    color: #4b0082; }
+
+/* Cards de cursos */
+.card {
+    background-color: #ffffff; 
+    border: 2px solid #4b0082; 
+    border-radius: 10px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(75, 0, 130, 0.3);
+}
+
+/* Botões */
+.btn-outline-danger {
+    color: #4b0082;
+    border-color: #4b0082;
+    transition: 0.2s;
+}
+
+.btn-outline-danger:hover {
+    background-color: #4b0082;
+    color: #fff;
+    border-color: #4b0082;
+}
+
+.btn-success {
+    background-color: #8a2be2; 
+    border-color: #8a2be2;
+}
+
+.btn-success:hover {
+    background-color: #4b0082;
+    border-color: #4b0082;
+}
+
+/* Linha separadora */
+hr {
+    border-top: 2px solid #4b0082;
+}
+
+
+.card img {
+    border-radius: 8px;
+}
