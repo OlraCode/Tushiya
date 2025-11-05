@@ -45,6 +45,10 @@
                                 <form action="{{ path('app_cart_delete', {'id': course.id}) }}" method="POST" class="mt-auto d-flex flex-column">
                                     <button type="submit" class="btn btn-outline-danger me-2">Remover do carrinho</button>
                                 </form>
+                            {% elseif course in purchasedCourses %}
+                            <form action="{{ path('app_my_courses') }}" class="mt-auto d-flex flex-column">
+                                <button type="submit" class="btn btn-primary">Acessar Curso</button>
+                            </form>
                             {% else %}
                                 <form action="{{ path('app_cart_new', {'id': course.id}) }}" method="POST" class="mt-auto d-flex flex-column">
                                     <button type="submit" class="btn btn-success me-2">Adicionar ao carrinho</button>

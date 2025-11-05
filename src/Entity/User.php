@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Mime\Message;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -42,9 +43,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private bool $isVerified = false;
 
-    #[ORM\Column(length: 30)]
-    #[Assert\Length(min: 3, max: 30, minMessage: 'Nome deve conter no mínimo 3 caracteres', maxMessage: 'Nome deve conter no máximo 30 caracteres')]
+    #[ORM\Column(length: 60)]
+    #[Assert\Length(min: 3, max: 60, minMessage: 'Nome deve conter no mínimo 3 caracteres', maxMessage: 'Nome deve conter no máximo { limit } caracteres')]
     #[Assert\NotBlank(message: 'Campo nome é obrigatório')]
+    #[Assert\Regex(pattern: "/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/u", message: 'Nome deve conter apenas letras')]
     private ?string $name = null;
 
     #[ORM\Column(length: 20, nullable: true)]
@@ -67,6 +69,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\ManyToMany(targetEntity: Course::class)]
     private Collection $purchasedCourses;
+
+    #[ORM\Column(length: 180, nullable: true)]
+    #[Assert\Length(min: 15, max: 180)]
+    private ?string $description = null;
 
     public function __construct()
     {
@@ -268,6 +274,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function removePurchasedCourse(Course $purchasedCourse): static
     {
         $this->purchasedCourses->removeElement($purchasedCourse);
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
 
         return $this;
     }

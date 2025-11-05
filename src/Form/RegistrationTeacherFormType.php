@@ -13,6 +13,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class RegistrationTeacherFormType extends AbstractType
 {
@@ -23,8 +24,14 @@ class RegistrationTeacherFormType extends AbstractType
             ->add('subject', options: ['label' => 'Matéria', 
             'constraints' => [
                 new NotBlank(message: 'Campo matéria é obrigatório'),
-                new Length(min: 4, minMessage: 'Deve contar no mínimo {{ limit }} caracteres', max: 20, maxMessage: 'Deve conter no máximo {{ limit }} caracteres')]
+                new Length(min: 4, minMessage: 'Deve contar no mínimo {{ limit }} caracteres', max: 20, maxMessage: 'Deve conter no máximo {{ limit }} caracteres'),
+                new Regex(pattern: '/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/u', message: 'Deve conter apenas letras')]
                 ])
+            ->add('description', TextareaType::class, [
+                'label' => 'Descrição profissional',
+                'help' => 'Fale um pouco sobre sua formação acadêmica e histórico profissional',
+                'attr' => ['maxlength' => 180]
+            ])
             ->add('email')
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
@@ -34,6 +41,7 @@ class RegistrationTeacherFormType extends AbstractType
                         'message' => 'Você deve aceitar os termos.',
                     ]),
                 ],
+                'label_html' => true,
             ])
             ->add('plainPassword', RepeatedType::class, options: [
                 'type' => PasswordType::class,

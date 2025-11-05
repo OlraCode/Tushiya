@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Mime\Message;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,7 +26,7 @@ class CourseType extends AbstractType
     {
         $builder
             ->add('title', options: ['label' => 'Título'])
-            ->add('description', options: ['label' => 'Descrição'])
+            ->add('description', TextareaType::class, options: ['label' => 'Descrição', 'attr' => ['maxlength' => 255]])
             ->add('category', ChoiceType::class, [
                 'choices' => $this->category->findInOrder(),
                 'choice_label' => 'name',
