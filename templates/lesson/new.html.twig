@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Nova aula{% endblock %}
+
+{% block body %}
+    <h1>Cadastrar Aula</h1>
+
+    {{ form(form) }}
+
+    <a href="{{ path('app_course_index') }}" class="btn btn-warning mt-2">Voltar ao Catálogo</a>
+{% endblock %}

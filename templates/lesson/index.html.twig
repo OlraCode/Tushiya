@@ -21,6 +21,11 @@
                         <a href="{{ path('app_lesson', {id: lesson.course.id, number: lesson.number}) }}" class="list-group-item list-group-item-action">{{ lesson.title }}</a>
                     {% endif %}
                 {% endfor %}
+
+                {% if app.user == activeLesson.course.teacher %}
+                    <a href="{{ path('app_lesson_new', {id: activeLesson.course.id}) }}" class="btn btn-primary mt-3">Criar aula</a>
+                {% endif %}
+
             </div>
         </div>
 	</div>
