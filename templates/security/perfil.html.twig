@@ -3,14 +3,38 @@
 {% block title %}Perfil{% endblock %}
 
 {% block body %}
-    
-    <h1>Perfil</h1>
-    <br>
-    <h2>Nome: {{ app.user.name }}</h2>
 
-    {% if is_granted('ROLE_TEACHER') %}
-        <h2>Matéria: {{ app.user.subject }}</h2>
-        <h2>Descrição profissional: {{ app.user.description }}</h2>
-    {% endif %}
+<link rel="stylesheet" href="{{ asset('css/profile.css') }}">
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+
+            <div class="card profile-card p-4">
+                <div class="card-body text-center">
+
+                    <h1 class="profile-title mb-4">Perfil</h1>
+                    <h3 class="profile-subtitle">
+                        <span class="profile-strong">Nome:</span> {{ app.user.name }}
+                    </h3>
+
+                    <hr class="profile-divider">
+
+                    {% if is_granted('ROLE_TEACHER') %}
+                        <p class="profile-text mb-2">
+                            <span class="profile-strong">Matéria:</span> {{ app.user.subject }}
+                        </p>
+                        <p class="profile-text">
+                            <span class="profile-strong">Descrição profissional:</span><br>
+                            {{ app.user.description }}
+                        </p>
+                    {% endif %}
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 {% endblock %}

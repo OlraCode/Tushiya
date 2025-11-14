@@ -1,0 +1,40 @@
+/* Paleta */
+:root {
+    --purple: #7B2CBF;
+    --purple-light: #9D4EDD;
+    --white: #ffffff;
+    --black: #000000;
+}
+
+/* Card */
+.profile-card {
+    border: 2px solid var(--purple);
+    border-radius: 20px;
+    background: var(--white);
+    box-shadow: 0 0 15px rgba(123, 44, 191, 0.15);
+}
+
+/* Títulos */
+.profile-title {
+    color: var(--purple);
+    font-weight: bold;
+}
+
+.profile-subtitle {
+    color: var(--black);
+}
+
+/* Linhas */
+.profile-divider {
+    border-top: 2px solid var(--purple-light) !important;
+}
+
+/* Textos */
+.profile-text {
+    color: var(--black);
+}
+
+.profile-strong {
+    color: var(--purple);
+    font-weight: bold;
+}
