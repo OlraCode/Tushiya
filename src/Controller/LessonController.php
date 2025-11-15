@@ -19,10 +19,14 @@ final class LessonController extends AbstractController
         $lessons = $course->getLessons();
         $activeLesson = $lessons->filter(fn (Lesson $lesson) => $lesson->getNumber() == $number)->first();
 
+        if ($lessons->isEmpty()) {
+            return $this->redirectToRoute('app_lesson_new', ['id' => $course->getId()]);
+        }
+
         return $this->render('lesson/index.html.twig', compact('lessons', 'activeLesson'));
     }
 
-    #[Route('/course/{id}/lesson/new')]
+    #[Route('/course/{id}/lesson/new', name: 'app_lesson_new')]
     public function new(Request $request, Course $course, EntityManagerInterface $entityManager): Response
     {
         $lesson = new Lesson;
