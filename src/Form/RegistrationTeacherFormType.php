@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class RegistrationTeacherFormType extends AbstractType
 {
@@ -21,6 +22,7 @@ class RegistrationTeacherFormType extends AbstractType
     {
         $builder
             ->add('name', options: ['label' => 'Nome'])
+            ->add('cpf', TextType::class, options: ['label' => 'CPF', 'attr' => ['maxlength' => 11, 'minlength' => 11]])
             ->add('subject', options: ['label' => 'Matéria', 
             'constraints' => [
                 new NotBlank(message: 'Campo matéria é obrigatório'),

@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Mime\Message;
@@ -15,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity(fields: ['email'], message: 'Já existe uma conta com esse e-mail')]
+#[UniqueEntity(fields: ['cpf'], message: 'Já existe uma conta com este CPF.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -73,6 +75,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, nullable: true)]
     #[Assert\Length(min: 15, max: 180)]
     private ?string $description = null;
+
+    #[ORM\Column(type: Types::BIGINT)]
+    #[Assert\Length(min: 11, max: 11)]
+    private ?string $cpf = null;
 
     public function __construct()
     {
@@ -286,6 +292,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCpf(): ?string
+    {
+        return $this->cpf;
+    }
+
+    public function setCpf(string $cpf): static
+    {
+        $this->cpf = $cpf;
 
         return $this;
     }
