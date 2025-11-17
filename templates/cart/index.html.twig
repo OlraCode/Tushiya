@@ -1,32 +1,55 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Cart{% endblock %}
+{% block title %}Carrinho{% endblock %}
 
 {% block body %}
 
-    <div>
+    <link rel="stylesheet" href={{asset('css/cart.css')}}>
 
-        {% for course in cartItems %}
-            <div class="d-flex m-5 justify-content-between">
-                <img src="{{ asset('upload/coverImages/' ~ course.image) }}" style="width: 100px">
-                <h2>{{ course.title }}</h2>
-                <h2>{{ course.price }}</h2>
-                <form action="{{ path('app_cart_delete', {"id": course.id }) }}" method="POST">
-                    <button type="submit" class="btn btn-warning">Remover do carrinho</button>
-                </form>
-            </div>
-        {% else %}
-            <h2>Nenhum item no carrinho</h2>
-        {% endfor %}
+<div class="container py-5">
 
-        <hr>
-        
-        <h1>Valor Total: R${{ totalPrice | number_format(2, ',', '.') }}</h1>
+    <h1 class="mb-4 text-center">Meu Carrinho</h1>
 
-        <form action="{{ path('app_payment') }}" method="POST">
-            <button type="submit" class="btn btn-success">Comprar</button>
+    {% if cartItems is not empty %}
+
+        <div class="row g-4">
+            {% for course in cartItems %}
+                <div class="col-12">
+                    <div class="card shadow-sm p-3 d-flex flex-row align-items-center">
+
+                        <img src="{{ asset('upload/coverImages/' ~ course.image) }}" 
+                             class="img-fluid rounded" style="width: 120px; height: auto; object-fit: cover;">
+                        
+                        <div class="ms-4 flex-grow-1">
+                            <h5 class="mb-1">{{ course.title }}</h5>
+                            <p class="mb-0 fw-bold">R$ {{ course.price | number_format(2, ',', '.') }}</p>
+                        </div>
+
+                        <form action="{{ path('app_cart_delete', {"id": course.id }) }}" method="POST">
+                            <button type="submit" class="btn btn-outline-danger">Remover</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <hr class="my-4">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h3>Valor Total:</h3>
+            <h3 class="text-success">R$ {{ totalPrice | number_format(2, ',', '.') }}</h3>
+        </div>
+
+        <form action="{{ path('app_payment') }}" method="POST" class="text-end">
+            <button type="submit" class="btn btn-success btn-lg">Comprar Agora</button>
         </form>
 
-    </div>
+    {% else %}
+        <div class="alert alert-info text-center" role="alert">
+            Nenhum item no carrinho
+        </div>
+    {% endif %}
+
+</div>
 
 {% endblock %}

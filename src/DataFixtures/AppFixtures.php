@@ -4,13 +4,16 @@ namespace App\DataFixtures;
 
 use App\Entity\User;
 use App\Entity\Category;
+use App\Entity\Course;
+use App\Entity\Lesson;
+use App\Repository\UserRepository;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AppFixtures extends Fixture
 {
-    public function __construct(private UserPasswordHasherInterface $password) 
+    public function __construct(private UserPasswordHasherInterface $password, private UserRepository $userRepository) 
     {
     }
 
@@ -59,6 +62,36 @@ class AppFixtures extends Fixture
 
             $manager->persist($newCategory);
         }
+
+        $course = new Course;
+        $course->setTitle('Curso Teste');
+        $course->setDescription('Testando o meu mais novo curso com as aulas inclusas.');
+        $course->setPrice('50');
+        $course->setTeacher($this->userRepository->findOneBy(['email' => 'teacher@example.com']));
+        $course->setIsVerified(true);
+        $manager->persist($course);
+
+        $lesson1 = new Lesson;
+        $lesson1->setCourse($course);
+        $lesson1->setNumber(1);
+        $lesson1->setTitle('Aula 1');
+        $lesson1->setVideo('https://www.youtube.com/embed/S9uPNppGsGo?si=vewCqnUyZlAeqKth'); 
+        $manager->persist($lesson1);
+
+        $lesson2 = new Lesson;
+        $lesson2->setCourse($course);
+        $lesson2->setNumber(2);
+        $lesson2->setTitle('Aula 2');
+        $lesson2->setVideo('https://www.youtube.com/embed/S9uPNppGsGo?si=vewCqnUyZlAeqKth');
+        $manager->persist($lesson2);
+
+        $lesson3 = new Lesson;
+        $lesson3->setCourse($course);
+        $lesson3->setNumber(3);
+        $lesson3->setTitle('Aula 3');
+        $lesson3->setVideo('https://www.youtube.com/embed/S9uPNppGsGo?si=vewCqnUyZlAeqKth');
+        $manager->persist($lesson3);
+
         $manager->flush();
     }
 }

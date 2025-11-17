@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Lições
+{% endblock %}
+
+{% block body %}
+
+	<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Aulas</button>
+
+	<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+		<div class="offcanvas-header">
+			<h5 class="offcanvas-title" id="offcanvasScrollingLabel">Lições</h5>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+		</div>
+		<div class="offcanvas-body">
+			<div class="list-group">
+                {% for lesson in lessons %}
+                    {% if lesson == activeLesson %}
+                        <a href="{{ path('app_lesson', {id: lesson.course.id, number: lesson.number }) }}" class="list-group-item list-group-item-action active">{{ lesson.title }}</a>
+                    {% else %}
+                        <a href="{{ path('app_lesson', {id: lesson.course.id, number: lesson.number}) }}" class="list-group-item list-group-item-action">{{ lesson.title }}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+	</div>
+
+    <p>
+
+    <h2>Título: {{ activeLesson.title }}</h2>
+    <h2>Número: {{ activeLesson.number }}</h2>
+    <iframe
+        width="560"
+        height="315"
+        src="{{ activeLesson.video }}"
+        title="YouTube video player"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+    </iframe>
+
+
+{% endblock %}
