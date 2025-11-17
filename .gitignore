@@ -33,4 +33,4 @@ yarn-error.log
 ###< symfony/webpack-encore-bundle ###
 
 ###< n8n local data ###
-n8n_data/
+n8n_data/*.log
