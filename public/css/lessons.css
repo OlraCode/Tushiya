@@ -1,0 +1,73 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+body {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+    background-color: #ffffff;
+    color: #333;
+}
+
+body > * {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* Botão principal */
+.btn-primary {
+    background-color: #6f42c1;
+    border-color: #6f42c1;
+    color: #fff;
+    margin-top: 20px;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    background-color: #5a33a4;
+    border-color: #5a33a4;
+}
+
+
+.offcanvas {
+    text-align: left; }
+
+.offcanvas-header {
+    background-color: #f8f5ff;
+}
+
+.offcanvas-title {
+    color: #6f42c1;
+    font-weight: 600;
+}
+
+/* Lista de lições */
+.list-group-item.active {
+    background-color: #6f42c1 !important;
+    border-color: #6f42c1 !important;
+}
+
+.list-group-item:hover {
+    background-color: #f3e8ff;
+}
+
+/* Títulos */
+h2 {
+    color: #6f42c1;
+    font-weight: 600;
+    margin-top: 20px;
+}
+
+
+iframe {
+    display: block;
+    margin: 20px auto;
+    border: 3px solid #ede4ff;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(111, 66, 193, 0.2);
+}
+
+/* Botão "Criar aula" */
+.btn-primary.mt-3 {
+    background-color: #6f42c1;
+    border-color: #6f42c1;
+}
