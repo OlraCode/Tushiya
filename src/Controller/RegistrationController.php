@@ -8,6 +8,7 @@ use App\Form\RegistrationFormType;
 use Symfony\Component\Mime\Address;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\RegistrationTeacherFormType;
+use Respect\Validation\Validator;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

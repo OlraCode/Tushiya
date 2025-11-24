@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_EMAIL', fields: ['email'])]
 #[UniqueEntity(fields: ['email'], message: 'Já existe uma conta com esse e-mail')]
+#[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_CPF', fields: ['cpf'])]
 #[UniqueEntity(fields: ['cpf'], message: 'Já existe uma conta com este CPF.')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
@@ -303,7 +304,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     public function setCpf(string $cpf): static
     {
-        $this->cpf = $cpf;
+        $this->cpf = preg_replace('/\D/', '', $cpf);
 
         return $this;
     }

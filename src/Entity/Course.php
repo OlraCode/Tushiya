@@ -234,7 +234,7 @@ class Course
         return $this;
     }
 
-    public function getLesson(int $number): Lesson
+    public function getLesson(int $number): Lesson|bool
     {
         $lessons = $this->getLessons();
         $lesson = $lessons->filter(fn($item) => $item->getNumber() == $number);

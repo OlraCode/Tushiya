@@ -31,7 +31,7 @@
                 <td>{{ course.teacher.name }}</td>
                 <td>
                     <div class="d-flex">
-                        <a href="{{ path('app_course_show', {'id': course.id}) }}" class="btn btn-dark me-2">Detalhes</a>
+                        <a href="{{ path('app_lesson', {'id': course.id, number: 1}) }}" class="btn btn-dark me-2">Acessar aulas</a>
                     </div>
                 </td>
             </tr>

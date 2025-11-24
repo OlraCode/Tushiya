@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Respect\Validation\Validator;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\Regex;
@@ -10,11 +11,13 @@ use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class RegistrationTeacherFormType extends AbstractType
 {
@@ -22,13 +25,23 @@ class RegistrationTeacherFormType extends AbstractType
     {
         $builder
             ->add('name', options: ['label' => 'Nome'])
-            ->add('cpf', TextType::class, options: ['label' => 'CPF', 'attr' => ['maxlength' => 11, 'minlength' => 11]])
-            ->add('subject', options: ['label' => 'Matéria', 
-            'constraints' => [
-                new NotBlank(message: 'Campo matéria é obrigatório'),
-                new Length(min: 4, minMessage: 'Deve contar no mínimo {{ limit }} caracteres', max: 20, maxMessage: 'Deve conter no máximo {{ limit }} caracteres'),
-                new Regex(pattern: '/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/u', message: 'Deve conter apenas letras')]
-                ])
+            ->add('cpf', TextType::class, options: [
+                'label' => 'CPF',
+                'attr' => ['maxlength' => 14, 'minlength' => 14, 'inputmode' => 'numeric'],
+                'constraints' => new Callback(function ($inputCpf, ExecutionContextInterface $context) {
+                    if (!Validator::cpf()->validate($inputCpf)) {
+                        $context->addViolation('CPF inválido');
+                    }
+                })
+            ])
+            ->add('subject', options: [
+                'label' => 'Matéria',
+                'constraints' => [
+                    new NotBlank(message: 'Campo matéria é obrigatório'),
+                    new Length(min: 4, minMessage: 'Deve contar no mínimo {{ limit }} caracteres', max: 20, maxMessage: 'Deve conter no máximo {{ limit }} caracteres'),
+                    new Regex(pattern: '/^[A-Za-zÀ-ÖØ-öø-ÿ\s]+$/u', message: 'Deve conter apenas letras')
+                ]
+            ])
             ->add('description', TextareaType::class, [
                 'label' => 'Descrição profissional',
                 'help' => 'Fale um pouco sobre sua formação acadêmica e histórico profissional',
@@ -48,20 +61,21 @@ class RegistrationTeacherFormType extends AbstractType
             ->add('plainPassword', RepeatedType::class, options: [
                 'type' => PasswordType::class,
                 'first_options' =>
-                    [
-                        'label' => 'Senha',
-                        'help' => 'A senha deve conter pelo menos 6 caracteres, incluindo: uma letra maiúscula, uma letra minúscula e um número.',
-                        'attr' => ['autocomplete' => 'new-password'],
-                        'constraints' => [
-                            new NotBlank([
-                                'message' => 'Insira uma senha',
-                            ]),
-                            new Length([
-                                'max' => 60,
-                                'maxMessage' => 'Senha pode conter no máximo {{ limit }} caracteres',
-                            ]),
-                            new Regex('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$^', 'Senha inválida')]
-                    ],
+                [
+                    'label' => 'Senha',
+                    'help' => 'A senha deve conter pelo menos 6 caracteres, incluindo: uma letra maiúscula, uma letra minúscula e um número.',
+                    'attr' => ['autocomplete' => 'new-password'],
+                    'constraints' => [
+                        new NotBlank([
+                            'message' => 'Insira uma senha',
+                        ]),
+                        new Length([
+                            'max' => 60,
+                            'maxMessage' => 'Senha pode conter no máximo {{ limit }} caracteres',
+                        ]),
+                        new Regex('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$^', 'Senha inválida')
+                    ]
+                ],
                 'second_options' => ['label' => 'Confirmar Senha'],
                 'invalid_message' => 'As senhas não coincidem.',
                 'mapped' => false,

@@ -3,19 +3,19 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Respect\Validation\Validator;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Callback;
+use Symfony\Component\Validator\Constraints\Regex;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class RegistrationFormType extends AbstractType
@@ -26,7 +26,12 @@ class RegistrationFormType extends AbstractType
             ->add('name', options: ['label' => 'Nome'])
             ->add('cpf', TextType::class, options: [
                 'label' => 'CPF',
-                'attr' => ['maxlength' => 11, 'minlength' => 11],
+                'attr' => ['maxlength' => 14, 'minlength' => 14, 'inputmode' => 'numeric'],
+                'constraints' => new Callback(function ($inputCpf, ExecutionContextInterface $context) {
+                    if (!Validator::cpf()->validate($inputCpf)) {
+                        $context->addViolation('CPF inválido');
+                    }
+                })
             ])
             ->add('email')
             ->add('agreeTerms', CheckboxType::class, [
