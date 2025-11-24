@@ -7,6 +7,13 @@
 
 	<button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Aulas</button>
 
+    <a href="{{ path('app_lesson_edit', {id: activeLesson.course.id, number: activeLesson.number}) }}" class="btn btn-warning ms-1">Editar Aula</a>
+
+    <form action="{{ path('app_lesson_remove', {id: activeLesson.course.id, number: activeLesson.number}) }}" method="post" class="d-inline">
+        <button type="submit" class="btn btn-danger ms-1">Remover Aula</button>
+    </form>
+
+
 	<div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
 		<div class="offcanvas-header">
 			<h5 class="offcanvas-title" id="offcanvasScrollingLabel">Lições</h5>

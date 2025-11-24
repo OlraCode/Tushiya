@@ -21,7 +21,7 @@ class LessonType extends AbstractType
                     new Length(min: 4, max: 40)
                 ]
             ])
-            ->add('button', SubmitType::class, ['label' => 'Cadastrar']);
+            ->add('button', SubmitType::class, ['label' => 'Salvar']);
         ;
     }
 

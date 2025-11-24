@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Nova aula{% endblock %}
+{% block title %}{{ lesson.id ? 'Editar Aula' : 'Nova Aula'}}{% endblock %}
 
 {% block body %}
-    <h1>Cadastrar Aula</h1>
+    <h1>{{ lesson.id ? 'Atualizar Aula' : 'Cadastrar Aula'}}</h1>
 
     {{ form(form) }}
 

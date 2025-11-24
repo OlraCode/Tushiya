@@ -233,4 +233,12 @@ class Course
 
         return $this;
     }
+
+    public function getLesson(int $number): Lesson
+    {
+        $lessons = $this->getLessons();
+        $lesson = $lessons->filter(fn($item) => $item->getNumber() == $number);
+
+        return $lesson->first();
+    }
 }
