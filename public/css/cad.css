@@ -98,18 +98,6 @@ label {
     font-size: 13px;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
-    width: 100%;
-    padding: 6px 8px;
-    border: none;
-    border-bottom: 2px solid var(--roxo-claro);
-    font-size: 12px;
-    background: transparent;
-    transition: all 0.3s;
-    border-radius: 0;
-}
 
 input:focus {
     border-color: var(--roxo-claro);

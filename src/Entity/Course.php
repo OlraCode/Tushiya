@@ -58,9 +58,16 @@ class Course
     #[ORM\ManyToMany(targetEntity: Category::class, inversedBy: 'courses')]
     private Collection $categories;
 
+    /**
+     * @var Collection<int, Lesson>
+     */
+    #[ORM\OneToMany(targetEntity: Lesson::class, mappedBy: 'course', orphanRemoval: true)]
+    private Collection $lessons;
+
     public function __construct()
     {
         $this->categories = new ArrayCollection();
+        $this->lessons = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -193,6 +200,36 @@ class Course
     public function removeAllCategories(): static
     {
         $this->categories->clear();
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Lesson>
+     */
+    public function getLessons(): Collection
+    {
+        return $this->lessons;
+    }
+
+    public function addLesson(Lesson $lesson): static
+    {
+        if (!$this->lessons->contains($lesson)) {
+            $this->lessons->add($lesson);
+            $lesson->setCourse($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLesson(Lesson $lesson): static
+    {
+        if ($this->lessons->removeElement($lesson)) {
+            // set the owning side to null (unless already changed)
+            if ($lesson->getCourse() === $this) {
+                $lesson->setCourse(null);
+            }
+        }
 
         return $this;
     }
