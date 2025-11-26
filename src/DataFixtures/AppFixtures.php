@@ -20,9 +20,9 @@ class AppFixtures extends Fixture
     public function load(ObjectManager $manager): void
     {
         $users = [
-            ['admin@example.com', 'Admin1234', ['ROLE_ADMIN']],
-            ['teacher@example.com', 'Teacher1234', ['ROLE_TEACHER']],
-            ['student@example.com', 'student1234', ['ROLE_USER']],
+            ['admin@example.com', 'Admin1234', ['ROLE_ADMIN'], '10012553050'],
+            ['teacher@example.com', 'Teacher1234', ['ROLE_TEACHER'], '97817467005'],
+            ['student@example.com', 'student1234', ['ROLE_USER'], '40895329069'],
         ];
 
         foreach ($users as $user) {
@@ -38,6 +38,7 @@ class AppFixtures extends Fixture
             $newUser->setEmail($user[0]);
             $newUser->setPassword($this->password->hashPassword($newUser, $user[1]));
             $newUser->setRoles($user[2]);
+            $newUser->setCpf($user[3]);
 
             $manager->persist($newUser);
         }
@@ -62,36 +63,7 @@ class AppFixtures extends Fixture
 
             $manager->persist($newCategory);
         }
-
-        $course = new Course;
-        $course->setTitle('Curso Teste');
-        $course->setDescription('Testando o meu mais novo curso com as aulas inclusas.');
-        $course->setPrice('50');
-        $course->setTeacher($this->userRepository->findOneBy(['email' => 'teacher@example.com']));
-        $course->setIsVerified(true);
-        $manager->persist($course);
-
-        $lesson1 = new Lesson;
-        $lesson1->setCourse($course);
-        $lesson1->setNumber(1);
-        $lesson1->setTitle('Aula 1');
-        $lesson1->setVideo('https://www.youtube.com/embed/S9uPNppGsGo?si=vewCqnUyZlAeqKth'); 
-        $manager->persist($lesson1);
-
-        $lesson2 = new Lesson;
-        $lesson2->setCourse($course);
-        $lesson2->setNumber(2);
-        $lesson2->setTitle('Aula 2');
-        $lesson2->setVideo('https://www.youtube.com/embed/S9uPNppGsGo?si=vewCqnUyZlAeqKth');
-        $manager->persist($lesson2);
-
-        $lesson3 = new Lesson;
-        $lesson3->setCourse($course);
-        $lesson3->setNumber(3);
-        $lesson3->setTitle('Aula 3');
-        $lesson3->setVideo('https://www.youtube.com/embed/S9uPNppGsGo?si=vewCqnUyZlAeqKth');
-        $manager->persist($lesson3);
-
+        
         $manager->flush();
     }
 }
